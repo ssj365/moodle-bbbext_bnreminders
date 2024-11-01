@@ -17,7 +17,7 @@
 /**
  * Language File.
  *
- * @package   bbbext_bnnotifications
+ * @package   bbbext_bnnotify
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -25,12 +25,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 $string['addreminder'] = 'Add reminder';
-$string['bnnotifications'] = 'Send email reminders before the session starts';
-$string['bnnotifications:enabled'] = 'Send email reminders before session';
-$string['bnnotifications:guestenabled'] = 'Add guests to the list of users to send the reminder to';
-$string['bnnotifications:header'] = 'Reminders';
-$string['bnnotifications:preferences'] = 'BigBlueButton reminders preferences';
-$string['bnnotifications_help'] = 'If enabled and a start date is set, send email reminders for users registered to the activity';
+$string['bnnotify'] = 'Send email reminders before the session starts';
+$string['bnnotify:enabled'] = 'Send email reminders before session';
+$string['bnnotify:guestenabled'] = 'Add guests to the list of users to send the reminder to';
+$string['bnnotify:header'] = 'Reminders';
+$string['bnnotify:preferences'] = 'BigBlueButton reminders preferences';
+$string['bnnotify_help'] = 'If enabled and a start date is set, send email reminders for users registered to the activity';
 $string['check_emails_reminder'] = 'Check emails reminder';
 $string['email_reminder_subject'] = 'Reminder for the meeting {$a->name}';
 $string['email_unsubscribe_message'] = '<span>

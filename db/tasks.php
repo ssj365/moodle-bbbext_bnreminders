@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Definition of scheduled tasks for bbbext_bnnotifications.
+ * Definition of scheduled tasks for bbbext_bnnotify.
  *
- * @package   bbbext_bnnotifications
+ * @package   bbbext_bnnotify
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $tasks = [
     [
-        'classname' => bbbext_bnnotifications\task\check_emails_reminder::class,
+        'classname' => bbbext_bnnotify\task\check_emails_reminder::class,
         'blocking' => 0,
         'minute' => '*',
         'hour' => '*',

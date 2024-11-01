@@ -15,7 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template bbbext_bnnotifications/subscriptions
+    @template bbbext_bnnotify/subscriptions
 
     This template renders the mobile page.
 
@@ -42,9 +42,9 @@
         ]
     }
 }}
-<div class="bbbext_bnnotifications_subscriptions">
+<div class="bbbext_bnnotify_subscriptions">
     <div class="card-header">
-        <h5 class="card-title">{{#str}}subscriptions, bbbext_bnnotifications{{/str}}</h5>
+        <h5 class="card-title">{{#str}}subscriptions, bbbext_bnnotify{{/str}}</h5>
     </div>
     <div class="card-body">
         <div class="d-flex flex-column">
@@ -53,10 +53,10 @@
                     <div class="align-self-start">
                         <a class="align-self-start" href="{{url}}">{{name}}</a>
                         {{#subscribed}}
-                            {{#pix}} i/checked, core, {{#str}}subscribed, bbbext_bnnotifications{{/str}}{{/pix}}
+                            {{#pix}} i/checked, core, {{#str}}subscribed, bbbext_bnnotify{{/str}}{{/pix}}
                         {{/subscribed}}
                         {{^subscribed}}
-                            {{#pix}} e/cancel, core, {{#str}}unsubscribed, bbbext_bnnotifications{{/str}}{{/pix}}
+                            {{#pix}} e/cancel, core, {{#str}}unsubscribed, bbbext_bnnotify{{/str}}{{/pix}}
                         {{/subscribed}}
                     </div>
                     <div class="align-self-end">

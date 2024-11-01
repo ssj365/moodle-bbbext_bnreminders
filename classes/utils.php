@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnnotifications;
+namespace bbbext_bnnotify;
 
 /**
  * Utility class
  *
- * @package   bbbext_bnnotifications
+ * @package   bbbext_bnnotify
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -73,7 +73,7 @@ class utils {
         return
             array_combine(self::TIMESPAN_OPTIONS,
                 array_map(
-                    fn($optionname) => get_string('timespan:' . strtolower($optionname), 'bbbext_bnnotifications'),
+                    fn($optionname) => get_string('timespan:' . strtolower($optionname), 'bbbext_bnnotify'),
                     self::TIMESPAN_OPTIONS
                 ));
     }

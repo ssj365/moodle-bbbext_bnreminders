@@ -14,16 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnnotifications;
+namespace bbbext_bnnotify;
 
 /**
  * BBB Utils tests class.
  *
- * @package   bbbext_bnnotifications
+ * @package   bbbext_bnnotify
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
- * @coversDefaultClass  \bbbext_bnnotifications\utils
+ * @coversDefaultClass  \bbbext_bnnotify\utils
  */
 final class utils_test extends \advanced_testcase {
     /**
@@ -35,11 +35,11 @@ final class utils_test extends \advanced_testcase {
     public function test_get_timespan_options(): void {
         $result = utils::get_timespan_options();
         $this->assertEquals([
-            utils::ONE_HOUR => get_string('timespan:pt1h', 'bbbext_bnnotifications'),
-            utils::TWO_HOURS => get_string('timespan:pt2h', 'bbbext_bnnotifications'),
-            utils::ONE_DAY => get_string('timespan:p1d', 'bbbext_bnnotifications'),
-            utils::TWO_DAYS => get_string('timespan:p2d', 'bbbext_bnnotifications'),
-            utils::ONE_WEEK => get_string('timespan:p1w', 'bbbext_bnnotifications'),
+            utils::ONE_HOUR => get_string('timespan:pt1h', 'bbbext_bnnotify'),
+            utils::TWO_HOURS => get_string('timespan:pt2h', 'bbbext_bnnotify'),
+            utils::ONE_DAY => get_string('timespan:p1d', 'bbbext_bnnotify'),
+            utils::TWO_DAYS => get_string('timespan:p2d', 'bbbext_bnnotify'),
+            utils::ONE_WEEK => get_string('timespan:p1w', 'bbbext_bnnotify'),
         ], $result);
     }
 }

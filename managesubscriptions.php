@@ -17,13 +17,13 @@
 /**
  * Get and set subscription status for a user or an email.
  *
- * @package   bbbext_bnnotifications
+ * @package   bbbext_bnnotify
  * @copyright 2022 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David  (laurent [at] call-learning [dt] fr)
  */
 
-use bbbext_bnnotifications\subscription_utils;
+use bbbext_bnnotify\subscription_utils;
 use core\notification;
 use mod_bigbluebuttonbn\instance;
 use mod_bigbluebuttonbn\local\exceptions\server_not_available_exception;
@@ -35,16 +35,16 @@ require_login();
 global $PAGE, $OUTPUT, $USER;
 $PAGE->set_context(context_user::instance($USER->id));
 $PAGE->set_url(
-    '/mod/bigbluebuttonbn/extension/bnnotifications/managesubscriptions.php',
+    '/mod/bigbluebuttonbn/extension/bnnotify/managesubscriptions.php',
 );
 $title = get_string(
     'unsubscribe:title',
-    'bbbext_bnnotifications'
+    'bbbext_bnnotify'
 );
 $PAGE->set_title($title);
 $PAGE->set_heading($title);
 $PAGE->set_pagelayout('standard');
-$subscriptions = new \bbbext_bnnotifications\output\subscriptions($USER->id);
+$subscriptions = new \bbbext_bnnotify\output\subscriptions($USER->id);
 $cmid = optional_param('cmid', null, PARAM_INT);
 $state = optional_param('state', null, PARAM_BOOL);
 
@@ -55,7 +55,7 @@ if (!empty($cmid) && !is_null($state)) {
         subscription_utils::change_reminder_subcription_user($state, $USER->id, $instance);
         $message = get_string(
             $state ? 'subscribed:success' : 'unsubscribed:success',
-            'bbbext_bnnotifications',
+            'bbbext_bnnotify',
             [
                 'name' => $instance->get_meeting_name(),
             ]

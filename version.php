@@ -17,7 +17,7 @@
 /**
  * This file contains the version information for the sample bigbluebuttonbn subplugin
  *
- * @package   bbbext_bnnotifications
+ * @package   bbbext_bnnotify
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David  (laurent [at] call-learning [dt] fr)
@@ -26,6 +26,6 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->version   = 2024091300;
 $plugin->requires  = 2022112800;
-$plugin->component = 'bbbext_bnnotifications';
+$plugin->component = 'bbbext_bnnotify';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->release = '1.0';

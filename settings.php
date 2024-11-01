@@ -17,17 +17,17 @@
 /**
  * This file defines the admin settings for this plugin
  *
- * @package   bbbext_bnnotifications
+ * @package   bbbext_bnnotify
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
  */
 defined('MOODLE_INTERNAL') || die();
 // Add a text area with editor for the email template.
-$emailtemplateeditor = new admin_setting_confightmleditor('bbbext_bnnotifications/emailtemplate',
-    new lang_string('emailtemplate', 'bbbext_bnnotifications'),
-    new lang_string('emailtemplate:desc', 'bbbext_bnnotifications'),
-    new lang_string('emailtemplate:default', 'bbbext_bnnotifications'),
+$emailtemplateeditor = new admin_setting_confightmleditor('bbbext_bnnotify/emailtemplate',
+    new lang_string('emailtemplate', 'bbbext_bnnotify'),
+    new lang_string('emailtemplate:desc', 'bbbext_bnnotify'),
+    new lang_string('emailtemplate:default', 'bbbext_bnnotify'),
     PARAM_RAW
 );
 $settings->add($emailtemplateeditor);
