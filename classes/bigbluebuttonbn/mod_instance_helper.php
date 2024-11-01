@@ -61,14 +61,18 @@ class mod_instance_helper extends \mod_bigbluebuttonbn\local\extension\mod_insta
         // Checks first.
         $count = $bigbluebuttonbn->bnnotifications_paramcount ?? 0;
         if (!empty($bigbluebuttonbn->bnnotifications_timespan)) {
-            $bigbluebuttonbn->bnnotifications_timespan = clean_param_array($bigbluebuttonbn->bnnotifications_timespan, PARAM_TEXT, true);
+            $bigbluebuttonbn->bnnotifications_timespan = clean_param_array(
+                $bigbluebuttonbn->bnnotifications_timespan, PARAM_TEXT, true
+            );
             if (empty($bigbluebuttonbn->bnnotifications_timespan) &&
                 (!(defined('PHPUNIT_TEST') && PHPUNIT_TEST) && !defined('BEHAT_SITE_RUNNING'))) {
                 debugging('bnnotifications : The reminder contains invalid value.');
             }
         }
         if (!isset($bigbluebuttonbn->bnnotifications_reminderenabled) ||
-            clean_param($bigbluebuttonbn->bnnotifications_reminderenabled, PARAM_BOOL) != $bigbluebuttonbn->bnnotifications_reminderenabled) {
+            clean_param(
+                $bigbluebuttonbn->bnnotifications_reminderenabled, PARAM_BOOL) != $bigbluebuttonbn->bnnotifications_reminderenabled
+            ) {
             if (!(defined('PHPUNIT_TEST') && PHPUNIT_TEST) && !defined('BEHAT_SITE_RUNNING')) {
                 debugging('bnnotifications : The enabled type contains invalid value.');
             }

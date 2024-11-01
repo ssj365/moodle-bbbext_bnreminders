@@ -204,7 +204,8 @@ class mod_form_addons extends \mod_bigbluebuttonbn\local\extension\mod_form_addo
         global $OUTPUT;
         $this->mform->addElement('header', 'bnnotifications', get_string('bnnotifications:header', 'bbbext_bnnotifications'));
         $this->mform->addHelpButton('bnnotifications', 'bnnotifications', 'bbbext_bnnotifications');
-        $this->mform->addElement('advcheckbox', 'bnnotifications_reminderenabled', get_string('bnnotifications:enabled', 'bbbext_bnnotifications'));
+        $this->mform->addElement('advcheckbox', 'bnnotifications_reminderenabled',
+            get_string('bnnotifications:enabled', 'bbbext_bnnotifications'));
         $this->mform->disabledIf('bnnotifications_reminderenabled', 'openingtime[enabled]', 'notchecked', 0);
         $this->mform->setType('bnnotifications_reminderenabled', PARAM_BOOL);
 
@@ -215,7 +216,8 @@ class mod_form_addons extends \mod_bigbluebuttonbn\local\extension\mod_form_addo
         $this->mform->hideIf('bnnotifications_remindertoguestsenabled', 'bnnotifications_reminderenabled', 'notchecked', 0);
         $this->mform->setType('bnnotifications_remindertoguestsenabled', PARAM_BOOL);
 
-        $paramcount = optional_param('bnnotifications_paramcount', $this->bigbluebuttonbndata->bnnotifications_paramcount ?? 0, PARAM_RAW);
+        $paramcount = optional_param('bnnotifications_paramcount',
+            $this->bigbluebuttonbndata->bnnotifications_paramcount ?? 0, PARAM_RAW);
         $paramcount += optional_param('bnnotifications_addparamgroup', 0, PARAM_RAW) ? 1 : 0;
         $isdeleting = optional_param_array('bnnotifications_paramdelete', [], PARAM_RAW);
         foreach ($isdeleting as $index => $value) {
@@ -231,13 +233,13 @@ class mod_form_addons extends \mod_bigbluebuttonbn\local\extension\mod_form_addo
                     get_string('timespan', 'bbbext_bnnotifications'),
                     utils::get_timespan_options()
                 );
-            $paramtext =
-                $this->mform->createElement('html', html_writer::span(get_string('reminder:message', 'bbbext_bnnotifications'), 'mx-3'));
-            $paramdelete = $this->mform->createElement('submit', "bnnotifications_paramdelete[$index]", get_string('delete'), [], false,
-                ['customclassoverride' => 'btn btn-secondary float-left']);
+            $paramtext = $this->mform->createElement(
+                'html', html_writer::span(get_string('reminder:message', 'bbbext_bnnotifications'), 'mx-3'));
+            $paramdelete = $this->mform->createElement('submit', "bnnotifications_paramdelete[$index]",
+                get_string('delete'), [], false, ['customclassoverride' => 'btn btn-secondary float-left']);
 
-            $this->mform->addGroup([$paramicon, $paramname, $paramtext, $paramdelete], "bnnotifications_paramgroup[$index]", '', [' '],
-                false);
+            $this->mform->addGroup([$paramicon, $paramname, $paramtext, $paramdelete],
+                "bnnotifications_paramgroup[$index]", '', [' '], false);
             $this->mform->hideIf("bnnotifications_paramgroup[$index]", 'bnnotifications_reminderenabled', 'notchecked', 0);
             $this->mform->disabledIf("bnnotifications_paramgroup[$index]", 'openingtime[enabled]', 'notchecked', 0);
             $this->mform->setType("bnnotifications_timespan[$index]", PARAM_ALPHANUM);

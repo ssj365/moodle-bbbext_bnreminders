@@ -54,15 +54,25 @@ class backup_bbbext_bnnotifications_subplugin extends backup_subplugin {
             ['bigbluebuttonbnid' => backup::VAR_PARENTID]
         );
 
-        $subpluginelementguest = new backup_nested_element('bbbext_bnnotifications_guests', ['id'], [
-            'bigbluebuttonbnid', 'email', 'userfrom', 'issent', 'isenabled', 'usermodified', 'timemodified', 'timecreated', ]);
+        $subpluginelementguest = new backup_nested_element('bbbext_bnnotifications_guests', ['id'],
+            [
+                'bigbluebuttonbnid',
+                'email',
+                'userfrom',
+                'issent',
+                'isenabled',
+                'usermodified',
+                'timemodified',
+                'timecreated',
+            ]);
         // Connect XML elements into the tree.
 
         // To know if we are including userinfo.
         $userinfo = $this->get_setting_value('userinfo');
         // This source definition only happen if we are including user info.
         if ($userinfo) {
-            $subpluginelementguest->set_source_table('bbbext_bnnotifications_guests', ['bigbluebuttonbnid' => backup::VAR_PARENTID]);
+            $subpluginelementguest->set_source_table('bbbext_bnnotifications_guests',
+                ['bigbluebuttonbnid' => backup::VAR_PARENTID]);
         }
 
         $subplugin->add_child($subpluginelementmain);
