@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Install script for bbbext_bnemail.
+ * Install script for bbbext_bnnotifications.
  *
- * @package   bbbext_bnemail
+ * @package   bbbext_bnnotifications
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -26,5 +26,5 @@
 /**
  * Perform the post-install procedures.
  */
-function xmldb_bbbext_bnemail_install() {
+function xmldb_bbbext_bnnotifications_install() {
 }

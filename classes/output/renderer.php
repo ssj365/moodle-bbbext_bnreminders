@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnemail\output;
+namespace bbbext_bnnotifications\output;
 use plugin_renderer_base;
 
 /**
  * Get and set subscription status for a user or an email.
  *
- * @package   bbbext_bnemail
+ * @package   bbbext_bnnotifications
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)

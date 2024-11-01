@@ -17,13 +17,13 @@
 /**
  * Get and set subscription status for a user or an email.
  *
- * @package   bbbext_bnemail
+ * @package   bbbext_bnnotifications
  * @copyright 2022 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David  (laurent [at] call-learning [dt] fr)
  */
 
-use bbbext_bnemail\subscription_utils;
+use bbbext_bnnotifications\subscription_utils;
 use core\notification;
 use mod_bigbluebuttonbn\instance;
 use mod_bigbluebuttonbn\local\exceptions\server_not_available_exception;
@@ -39,22 +39,22 @@ $userid = optional_param('userid', null, PARAM_INT);
 $cmid = required_param('cmid', PARAM_INT);
 $instance = instance::get_from_cmid($cmid);
 if (empty($instance)) {
-    throw new moodle_exception('activitynotfound', 'bbbext_bnemail');
+    throw new moodle_exception('activitynotfound', 'bbbext_bnnotifications');
 }
 // Get the guest matching guest access link.
 $PAGE->set_url(
-    '/mod/bigbluebuttonbn/extension/bnemail/subscription.php',
+    '/mod/bigbluebuttonbn/extension/bnnotifications/subscription.php',
     ['cmid' => $cmid, 'email' => $email]
 );
 $title = get_string(
     'unsubscribe:title:meeting',
-    'bbbext_bnemail',
+    'bbbext_bnnotifications',
     $instance->get_course()->shortname . ': ' . format_string($instance->get_meeting_name())
 );
 $PAGE->set_title($title);
 $PAGE->set_heading($title);
 $PAGE->set_pagelayout('standard');
-$form = new \bbbext_bnemail\form\unsubscribe(null);
+$form = new \bbbext_bnnotifications\form\unsubscribe(null);
 $form->set_data(['email' => $email, 'cmid' => $cmid, 'userid' => $userid]);
 // Specific for the tests: we allow to set the password in the form here.
 if (defined('BEHAT_SITE_RUNNING')) {
@@ -65,8 +65,8 @@ if ($userid) {
 }
 $formcontent = '';
 $managepreferences = new single_button(
-    new moodle_url('/mod/bigbluebuttonbn/extension/bnemail/managesubscriptions.php'),
-    get_string('unsubscribe:managepreferences', 'bbbext_bnemail'),
+    new moodle_url('/mod/bigbluebuttonbn/extension/bnnotifications/managesubscriptions.php'),
+    get_string('unsubscribe:managepreferences', 'bbbext_bnnotifications'),
     'get',
 );
 $managepreferences->class = 'mdl-align';
@@ -75,7 +75,7 @@ if ($form->is_cancelled()) {
         $formcontent = $OUTPUT->render($managepreferences);
     }
     notification::add(
-        get_string('subscribed:cancel', 'bbbext_bnemail'),
+        get_string('subscribed:cancel', 'bbbext_bnnotifications'),
         \core\output\notification::NOTIFY_INFO);
 
 } else if ($data = $form->get_data()) {
@@ -95,7 +95,7 @@ if ($form->is_cancelled()) {
             $formcontent = $OUTPUT->render($managepreferences);
         }
         notification::add(
-            get_string('unsubscribed', 'bbbext_bnemail'),
+            get_string('unsubscribed', 'bbbext_bnnotifications'),
             \core\output\notification::NOTIFY_INFO);
     } catch (server_not_available_exception $e) {
         bigbluebutton_proxy::handle_server_not_available($instance);
@@ -106,4 +106,3 @@ if ($form->is_cancelled()) {
 echo $OUTPUT->header();
 echo $formcontent;
 echo $OUTPUT->footer();
-

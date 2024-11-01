@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnemail\task;
+namespace bbbext_bnnotifications\task;
 
-use bbbext_bnemail\bigbluebuttonbn\mod_instance_helper;
-use bbbext_bnemail\local\persistent\guest_email;
-use bbbext_bnemail\subscription_utils;
-use bbbext_bnemail\utils;
+use bbbext_bnnotifications\bigbluebuttonbn\mod_instance_helper;
+use bbbext_bnnotifications\local\persistent\guest_email;
+use bbbext_bnnotifications\subscription_utils;
+use bbbext_bnnotifications\utils;
 use core\task\scheduled_task;
 use DateInterval;
 use DateTime;
@@ -28,7 +28,7 @@ use mod_bigbluebuttonbn\instance;
 /**
  * This adhoc task will send emails to guest users with the meeting's details
  *
- * @package   bbbext_bnemail
+ * @package   bbbext_bnnotifications
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -46,7 +46,7 @@ class check_emails_reminder extends scheduled_task {
      * @throws \coding_exception
      */
     public function get_name() {
-        return get_string('check_emails_reminder', 'bbbext_bnemail');
+        return get_string('check_emails_reminder', 'bbbext_bnnotifications');
     }
 
     /**
@@ -55,7 +55,7 @@ class check_emails_reminder extends scheduled_task {
     public function execute() {
         global $DB;
         $allinstancesreminder = $DB->get_recordset(mod_instance_helper::SUBPLUGIN_TABLE, ['reminderenabled' => 1]);
-        $enabled = \core_plugin_manager::instance()->get_plugin_info('bbbext_bnemail')->is_enabled();
+        $enabled = \core_plugin_manager::instance()->get_plugin_info('bbbext_bnnotifications')->is_enabled();
         if (!$enabled) {
             return;
         }
@@ -144,7 +144,7 @@ class check_emails_reminder extends scheduled_task {
      * @return string
      */
     protected function get_subject(instance $instance): string {
-        return get_string('email_reminder_subject', 'bbbext_bnemail', $this->get_string_vars($instance));
+        return get_string('email_reminder_subject', 'bbbext_bnnotifications', $this->get_string_vars($instance));
     }
 
     /**
@@ -171,7 +171,7 @@ class check_emails_reminder extends scheduled_task {
      * @return string
      */
     protected function get_html_message(instance $instance): string {
-        $htmlmessage = get_config('bbbext_bnemail', 'emailtemplate');
+        $htmlmessage = get_config('bbbext_bnnotifications', 'emailtemplate');
         $vars = $this->get_string_vars($instance);
         $htmlmessage = utils::replace_vars_in_text($vars, $htmlmessage);
         return $htmlmessage;

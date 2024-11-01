@@ -18,12 +18,12 @@
  * Provides the information for restore.
  *
  *
- * @package   bbbext_bnemail
+ * @package   bbbext_bnnotifications
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
  */
-class restore_bbbext_bnemail_subplugin extends restore_subplugin {
+class restore_bbbext_bnnotifications_subplugin extends restore_subplugin {
     /**
      * Returns the paths to be handled by the subplugin.
      *
@@ -34,15 +34,15 @@ class restore_bbbext_bnemail_subplugin extends restore_subplugin {
 
         $elename = $this->get_namefor('bigbluebuttonbn');
         // We used get_recommended_name() so this works.
-        $elepath = $this->get_pathfor('/bbbext_bnemail');
+        $elepath = $this->get_pathfor('/bbbext_bnnotifications');
         $paths[] = new restore_path_element($elename, $elepath);
 
         // We used get_recommended_name() so this works.
-        $elepath = $this->get_pathfor('/bbbext_bnemail_rem');
+        $elepath = $this->get_pathfor('/bbbext_bnnotifications_rem');
         $paths[] = new restore_path_element($elename, $elepath);
 
         // We used get_recommended_name() so this works.
-        $elepath = $this->get_pathfor('/bbbext_bnemail_guests');
+        $elepath = $this->get_pathfor('/bbbext_bnnotifications_guests');
         $paths[] = new restore_path_element($elename, $elepath);
 
         return $paths;
@@ -54,7 +54,7 @@ class restore_bbbext_bnemail_subplugin extends restore_subplugin {
      * @param array $data The data in object form
      * @return void
      */
-    protected function process_bbbext_bnemail_guests_bigbluebuttonbn(array $data) {
+    protected function process_bbbext_bnnotifications_guests_bigbluebuttonbn(array $data) {
         global $DB;
         $data = (object) $data;
         // Apply modifications.
@@ -64,9 +64,9 @@ class restore_bbbext_bnemail_subplugin extends restore_subplugin {
         $data->timecreated = $this->apply_date_offset($data->timecreated);
         $data->timemodified = $this->apply_date_offset($data->timemodified);
         // Insert the bigbluebuttonbn_logs record.
-        $newitemid = $DB->insert_record('bbbext_bnemail_guests', $data);
+        $newitemid = $DB->insert_record('bbbext_bnnotifications_guests', $data);
         // Immediately after inserting associated record, call this.
-        $this->set_mapping('bbbext_bnemail_guests', $data->id, $newitemid);
+        $this->set_mapping('bbbext_bnnotifications_guests', $data->id, $newitemid);
     }
 
     /**
@@ -74,12 +74,12 @@ class restore_bbbext_bnemail_subplugin extends restore_subplugin {
      *
      * @param mixed $data
      */
-    public function process_bbbext_bnemail_bigbluebuttonbn($data) {
+    public function process_bbbext_bnnotifications_bigbluebuttonbn($data) {
         global $DB;
 
         $data = (object) $data;
         $data->bigbluebuttonbnid = $this->get_new_parentid('bigbluebuttonbn');
-        $DB->insert_record('bbbext_bnemail', $data);
+        $DB->insert_record('bbbext_bnnotifications', $data);
     }
 
     /**
@@ -87,11 +87,11 @@ class restore_bbbext_bnemail_subplugin extends restore_subplugin {
      *
      * @param mixed $data
      */
-    public function process_bbbext_bnemail_rem_bigbluebuttonbn($data) {
+    public function process_bbbext_bnnotifications_rem_bigbluebuttonbn($data) {
         global $DB;
 
         $data = (object) $data;
         $data->bigbluebuttonbnid = $this->get_new_parentid('bigbluebuttonbn');
-        $DB->insert_record('bbbext_bnemail_rem', $data);
+        $DB->insert_record('bbbext_bnnotifications_rem', $data);
     }
 }

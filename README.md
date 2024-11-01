@@ -27,15 +27,15 @@ Git installation
 ------------
 1. Clone the repository:
 
-`git clone https://github.com/blindsidenetworks-ps/moodle-bbbext_bnemail.git`
+`git clone https://github.com/blindsidenetworks-ps/moodle-bbbext_bnnotifications.git`
 
 2. Rename the downloaded directory:
 
-`mv moodle-bbbext_bnemail bnemail`
+`mv moodle-bbbext_bnnotifications bnnotifications`
 
 3. Move the folder to the Moodle BigBlueButtonBN extensions directory:
 
-`mv bnemail /var/www/html/moodle/mod/bigbluebuttonbn/extension/`
+`mv bnnotifications /var/www/html/moodle/mod/bigbluebuttonbn/extension/`
 
 4. Run the Moodle upgrade script:
 
@@ -45,7 +45,7 @@ Manual installation
 ------------
 1. Download the sub plugin zip file and extract it.
 2. Place the extracted folder into `mod/bigbluebuttonbn/extension/`
-3. Rename the folder `bnemail`
+3. Rename the folder `bnnotifications`
 4. Access Moodle's Admin UI at `Site administration > Plugins > Install plugins` to complete the installation.
 
 
@@ -88,4 +88,4 @@ Requirements
 ============
 Requires BigBlueButtonBN module version > 2022112802
 
-For more detailed updates and support, visit the [BN Email Subplugin GitHub Repository](https://github.com/blindsidenetworks-ps/moodle-bbbext_bnemail)
+For more detailed updates and support, visit the [BN Email Subplugin GitHub Repository](https://github.com/blindsidenetworks-ps/moodle-bbbext_bnnotifications)

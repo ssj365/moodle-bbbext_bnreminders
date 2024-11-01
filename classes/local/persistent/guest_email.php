@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnemail\local\persistent;
+namespace bbbext_bnnotifications\local\persistent;
 
 use core\persistent;
 use mod_bigbluebuttonbn\instance;
@@ -22,7 +22,7 @@ use mod_bigbluebuttonbn\instance;
 /**
  * Guest email record for a given Meeting.
  *
- * @package   bbbext_bnemail
+ * @package   bbbext_bnnotifications
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -31,7 +31,7 @@ class guest_email extends persistent {
     /**
      * Table name
      */
-    const TABLE = 'bbbext_bnemail_guests';
+    const TABLE = 'bbbext_bnnotifications_guests';
 
     /**
      * Helper to create a guest email record for an instance and a given email (string).

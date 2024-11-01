@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnemail\task;
+namespace bbbext_bnnotifications\task;
 
-use bbbext_bnemail\subscription_utils;
-use bbbext_bnemail\utils;
+use bbbext_bnnotifications\subscription_utils;
+use bbbext_bnnotifications\utils;
 use core\task\adhoc_task;
 use core_user;
 use mod_bigbluebuttonbn\instance;
@@ -25,7 +25,7 @@ use mod_bigbluebuttonbn\instance;
 /**
  * This adhoc task will send emails to users via the messaging API
  *
- * @package   bbbext_bnemail
+ * @package   bbbext_bnnotifications
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -46,7 +46,7 @@ class send_email_reminders_message extends adhoc_task {
         foreach ($customdata->usersid as $userid) {
             $user = core_user::get_user($userid);
             $message = new \core\message\message();
-            $message->component = 'bbbext_bnemail';
+            $message->component = 'bbbext_bnnotifications';
             $message->name = 'reminder';
             $message->userfrom = core_user::get_noreply_user();
             $message->userto = $user;
@@ -65,7 +65,7 @@ class send_email_reminders_message extends adhoc_task {
             $unsubscribeurl = subscription_utils::get_unsubscribe_url($cmid, null, $userid);
             $unsubscribemessage = get_string(
                 'email_unsubscribe_message',
-                'bbbext_bnemail',
+                'bbbext_bnnotifications',
                 ['unsubscribeurl' => $unsubscribeurl->out(false)]
             );
             $content = [

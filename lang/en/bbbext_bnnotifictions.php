@@ -17,7 +17,7 @@
 /**
  * Language File.
  *
- * @package   bbbext_bnemail
+ * @package   bbbext_bnnotifications
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -43,14 +43,14 @@ $string['email_unsubscribe_message'] = '<span>
 You can unsubscribe to this reminder by clicking on the following <a href="{$a->unsubscribeurl}">Unsubscribe link</a>.
 </span>';
 $string['error:duplicate'] = 'You have already one reminder for this meeting for the same time span';
-$string['bnemail'] = 'Send email reminders before the session starts';
-$string['bnemail:header'] = 'Reminders';
-$string['bnemail:enabled'] = 'Send email reminders before session';
-$string['bnemail:preferences'] = 'BigBlueButton reminders preferences';
-$string['bnemail:guestenabled'] = 'Add guests to the list of users to send the reminder to';
-$string['bnemail_help'] = 'If enabled and a start date is set, send email reminders for users registered to the activity';
+$string['bnnotifications'] = 'Send email reminders before the session starts';
+$string['bnnotifications:header'] = 'Reminders';
+$string['bnnotifications:enabled'] = 'Send email reminders before session';
+$string['bnnotifications:preferences'] = 'BigBlueButton reminders preferences';
+$string['bnnotifications:guestenabled'] = 'Add guests to the list of users to send the reminder to';
+$string['bnnotifications_help'] = 'If enabled and a start date is set, send email reminders for users registered to the activity';
 $string['messageprovider:reminder'] = 'BigBlueButton email reminder';
-$string['pluginname'] = 'BigBlueButton bnemail';
+$string['pluginname'] = 'BigBlueButton bnnotifications';
 $string['reminder'] = 'Reminder';
 $string['reminder:message'] = 'before meeting starts';
 $string['reminder:openingtime:disabled'] = 'Opening time is disabled';
