@@ -257,10 +257,10 @@ class mod_form_addons extends \mod_bigbluebuttonbn\local\extension\mod_form_addo
         $this->mform->setType('bnnotify_paramcount', PARAM_INT);
         $this->mform->setConstants(['bnnotify_paramcount' => $paramcount]);
 
-        // Add the original openingtime to validate if it changes between updates.
+        // Add the original or default openingtime to validate if it changes between updates.
         $this->mform->addElement('hidden', 'bnnotify_openingtime');
         $this->mform->setType('bnnotify_openingtime', PARAM_INT);
-        $this->mform->setConstants(['bnnotify_openingtime' => $this->bigbluebuttonbndata->openingtime]);
+        $this->mform->setConstants(['bnnotify_openingtime' => $this->bigbluebuttonbndata->openingtime ?? 0]);
     }
 
     /**
