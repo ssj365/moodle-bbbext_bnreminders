@@ -1,4 +1,4 @@
-BigBlueButton Extension - BN Email Subplugin
+BigBlueButton Extension - BN Notify Subplugin
 =======================
 * Copyright: Blindside Networks Inc
 * License:  GNU GENERAL PUBLIC LICENSE Version 3
@@ -6,7 +6,7 @@ BigBlueButton Extension - BN Email Subplugin
 
 Overview
 ===========
-The BN Email subplugin enhances the BigBlueButtonBN module by sending automated reminder emails to users before a session starts. These reminders include a link to join the meeting and are sent to the email address registered with the user's account.
+The BN Notify subplugin enhances the BigBlueButtonBN module by sending automated reminder emails to users before a session starts. These reminders include a link to join the meeting and are sent to the email address registered with the user's account.
 
 
 Features
@@ -88,4 +88,4 @@ Requirements
 ============
 Requires BigBlueButtonBN module version > 2022112802
 
-For more detailed updates and support, visit the [BN Email Subplugin GitHub Repository](https://github.com/blindsidenetworks-ps/moodle-bbbext_bnnotify)
+For more detailed updates and support, visit the [BN Notify Subplugin GitHub Repository](https://github.com/blindsidenetworks-ps/moodle-bbbext_bnnotify)
