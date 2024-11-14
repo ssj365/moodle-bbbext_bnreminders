@@ -32,21 +32,27 @@ $string['bnnotify:header'] = 'Reminders';
 $string['bnnotify:preferences'] = 'BigBlueButton reminders preferences';
 $string['bnnotify_help'] = 'If enabled and a start date is set, send email reminders for users registered to the activity';
 $string['check_emails_reminder'] = 'Check emails reminder';
-$string['email_reminder_subject'] = 'Reminder for the meeting {$a->name}';
+$string['emailcontent'] = 'Email Customization';
+$string['emailcontent:desc'] = 'These settings will customize the message sent to users.';
+$string['emailfooter'] = 'Footer information';
+$string['emailfooter:desc'] = 'Add extra information such as institution location and contact details as a footer to emails.';
+$string['emailsubject'] = 'Email Subject';
+$string['emailsubject:desc'] = 'The subject of the email.';
+$string['emailsubject:default'] = 'Reminder for the meeting {$name}';
 $string['email_unsubscribe_message'] = '<span>
 You can unsubscribe to this reminder by clicking on the following <a href="{$a->unsubscribeurl}">Unsubscribe link</a>.
 </span>';
 $string['emailtemplate'] = 'Email template';
 $string['emailtemplate:default'] = '<p>
 Hi,<br><br>
-This is a reminder for the meeting <a href="{$url}">{$name}</a> that will start on {$date}.
-</p>
-';
-$string['emailtemplate:desc'] = 'Email template when sending reminders. The following variables can be used:
-{$course_fullname}: the course fullname,
-{$course_shortname}: the course shortname,
-{$date}: the meeting date and time,
-{$name}: the meeting name';
+This is a reminder about the upcoming meeting <a href="{$url}">{$name}</a> in {$course_fullname} scheduled to start on {$date}.
+</p>';
+$string['emailtemplate:desc'] = 'Email template when sending reminders.The following variables can be used:<ul>
+    <li>{$course_fullname}: the course fullname</li>
+    <li>{$course_shortname}: the course shortname</li>
+    <li>{$date}: the meeting date and time</li>
+    <li>{$name}: the meeting name</li>
+</ul>';
 $string['error:duplicate'] = 'You have already one reminder for this meeting for the same time span';
 $string['messageprovider:reminder'] = 'BigBlueButton email reminder';
 $string['pluginname'] = 'BigBlueButton BN Notifications';

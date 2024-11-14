@@ -18,8 +18,10 @@ namespace bbbext_bnnotify\output;
 
 use bbbext_bnnotify\subscription_utils;
 use mod_bigbluebuttonbn\instance;
+use moodle_url;
 use renderable;
 use renderer_base;
+use stdClass;
 use templatable;
 
 /**
@@ -48,7 +50,7 @@ class subscriptions implements renderable, templatable {
      * Export for template
      *
      * @param renderer_base $output
-     * @return \stdClass
+     * @return stdClass
      */
     public function export_for_template(renderer_base $output) {
         $courses = enrol_get_users_courses($this->userid);
@@ -62,6 +64,7 @@ class subscriptions implements renderable, templatable {
                         continue;
                     }
                     $meetingname = $bbbinstance->get_meeting_name();
+                    $coursename = $bbbinstance->get_course()->fullname;
                     $issubscribed = subscription_utils::is_user_subscribed($this->userid, $bbbinstance);
                     // Unsubscription toggle.
                     $toggle = [
@@ -75,17 +78,18 @@ class subscriptions implements renderable, templatable {
                         'value' => !$issubscribed,
                         'disabled' => false,
                     ];
-                    $instance = new \stdClass();
+                    $instance = new stdClass();
                     $instance->id = $module->id;
                     $instance->name = $meetingname;
-                    $instance->url = new \moodle_url('/mod/bigbluebuttonbn/view.php', ['id' => $module->id]);
+                    $instance->coursename = $coursename;
+                    $instance->url = new moodle_url('/mod/bigbluebuttonbn/view.php', ['id' => $module->id]);
                     $instance->toggle = $toggle;
                     $instance->subscribed = $issubscribed;
                     $instances[] = $instance;
                 }
             }
         }
-        $data = new \stdClass();
+        $data = new stdClass();
         $data->instances = $instances;
         return $data;
     }

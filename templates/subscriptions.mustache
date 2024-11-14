@@ -43,44 +43,53 @@
     }
 }}
 <div class="bbbext_bnnotify_subscriptions">
-    <div class="card-header">
-        <h5 class="card-title">{{#str}}subscriptions, bbbext_bnnotify{{/str}}</h5>
-    </div>
-    <div class="card-body">
-        <div class="d-flex flex-column">
-            {{#instances}}
-                <div class="d-flex m-3 justify-content-between">
-                    <div class="align-self-start">
-                        <a class="align-self-start" href="{{url}}">{{name}}</a>
-                        {{#subscribed}}
-                            {{#pix}} i/checked, core, {{#str}}subscribed, bbbext_bnnotify{{/str}}{{/pix}}
-                        {{/subscribed}}
-                        {{^subscribed}}
-                            {{#pix}} e/cancel, core, {{#str}}unsubscribed, bbbext_bnnotify{{/str}}{{/pix}}
-                        {{/subscribed}}
-                    </div>
-                    <div class="align-self-end">
-                        {{#toggle}}
-                          <form action="{{url}}" method="get" onchange="this.submit();">
-                            <div class="custom-control custom-switch">
-                              <input type="hidden" name="cmid" value="{{cmid}}" />
-                              {{#subscribed}}
-                                <input type="hidden" name="{{name}}" value="0" />
-                              {{/subscribed}}
-                              <input type="checkbox" class="custom-control-input" name="{{name}}" value="{{value}}" id="{{$id}}{{id}}{{/id}}"
-                                {{#checked}}checked{{/checked}}
-                                {{#disabled}}disabled{{/disabled}}>
-                              {{$labelmarkup}}
-                                <label class="custom-control-label" for="{{$id}}{{id}}{{/id}}">
-                                    <span class="col">{{$label}}{{label}}{{/label}}</span>
-                                </label>
-                              {{/labelmarkup}}
-                            </div>
-                          </form>
-                        {{/toggle}}
-                    </div>
+  <div class="card-header">
+    <h5 class="card-title">{{#str}}subscriptions, bbbext_bnnotify{{/str}}</h5>
+  </div>
+  <div class="card-body">
+    <div class="d-flex flex-column">
+      {{#instances}}
+        <div class="card m-3">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div class="align-self-start">
+                <a class="align-self-start" href="{{url}}">{{name}}</a>
+                {{#subscribed}}
+                  {{#pix}} i/checked, core, {{#str}}subscribed, bbbext_bnnotify{{/str}}{{/pix}}
+                {{/subscribed}}
+                {{^subscribed}}
+                  {{#pix}} e/cancel, core, {{#str}}unsubscribed, bbbext_bnnotify{{/str}}{{/pix}}
+                {{/subscribed}}
+
+                <div class="coursename" style="margin-top: 5px; text-align: left;">
+                  <span>{{coursename}}</span>
                 </div>
-            {{/instances}}
+              </div>
+
+              <div class="align-self-end">
+                {{#toggle}}
+                  <form action="{{url}}" method="get" onchange="this.submit();">
+                    <div class="custom-control custom-switch">
+                      <input type="hidden" name="cmid" value="{{cmid}}" />
+                      {{#subscribed}}
+                        <input type="hidden" name="{{name}}" value="0" />
+                      {{/subscribed}}
+                      <input type="checkbox" class="custom-control-input" name="{{name}}" value="{{value}}" id="{{$id}}{{id}}{{/id}}"
+                      {{#checked}}checked{{/checked}}
+                      {{#disabled}}disabled{{/disabled}}>
+                      {{$labelmarkup}}
+                      <label class="custom-control-label" for="{{$id}}{{id}}{{/id}}">
+                        <span class="col">{{$label}}{{label}}{{/label}}</span>
+                      </label>
+                      {{/labelmarkup}}
+                    </div>
+                  </form>
+                {{/toggle}}
+              </div>
+            </div>
+          </div>
         </div>
+      {{/instances}}
     </div>
+  </div>
 </div>

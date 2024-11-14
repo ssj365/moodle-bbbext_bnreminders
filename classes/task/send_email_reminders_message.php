@@ -20,6 +20,7 @@ use bbbext_bnnotify\subscription_utils;
 use bbbext_bnnotify\utils;
 use core\task\adhoc_task;
 use core_user;
+use moodle_url;
 use mod_bigbluebuttonbn\instance;
 
 /**
@@ -39,10 +40,15 @@ class send_email_reminders_message extends adhoc_task {
      */
     public function execute() {
         $customdata = $this->get_custom_data();
-        $emailsubject = $customdata->subject;
-        $emailhtmlmessage = $customdata->htmlmessage;
         $instance = instance::get_from_instanceid($customdata->instanceid);
         $cmid = $instance->get_cm_id();
+        $options =
+        [
+            'context' => $instance->get_context(),
+        ];
+        $emailsubject = $customdata->subject;
+        $emailhtmlmessage = format_text($customdata->htmlmessage, FORMAT_MOODLE, $options);
+        $emailfooter = format_text($customdata->emailfooter, FORMAT_MOODLE, $options);
         foreach ($customdata->usersid as $userid) {
             $user = core_user::get_user($userid);
             $message = new \core\message\message();
@@ -57,7 +63,7 @@ class send_email_reminders_message extends adhoc_task {
             $message->smallmessage = html_to_text($emailhtmlmessage);
             $message->notification = 1; // This message is just a notification from Moodle.
             $message->contexturl = (
-            new \moodle_url('/mod/bigbluebuttonbn/view.php?id',
+            new moodle_url('/mod/bigbluebuttonbn/view.php?id',
                 ['id' => $cmid])
             )->out(false); // A relevant URL for the notification.
             $message->contexturlname = $instance->get_meeting_name();
@@ -70,7 +76,7 @@ class send_email_reminders_message extends adhoc_task {
             );
             $content = [
                 '*' => [
-                    'footer' => $unsubscribemessage,
+                    'footer' => $unsubscribemessage . $emailfooter,
                 ],
             ];
             $message->set_additional_content('email', $content);

@@ -23,7 +23,24 @@
  * @author    Laurent David (laurent@call-learning.fr)
  */
 defined('MOODLE_INTERNAL') || die();
-// Add a text area with editor for the email template.
+
+// Content settings.
+$settings->add(new admin_setting_heading(
+    'bbbext_bnnotify/emailcontent',
+    get_string('emailcontent', 'bbbext_bnnotify'),
+    get_string('emailcontent:desc', 'bbbext_bnnotify')
+));
+// Text field setting.
+$textfield = new admin_setting_configtext(
+    'bbbext_bnnotify/emailsubject',
+    new lang_string('emailsubject', 'bbbext_bnnotify'),
+    new lang_string('emailsubject:desc', 'bbbext_bnnotify'),
+    new lang_string('emailsubject:default', 'bbbext_bnnotify'),
+    PARAM_RAW,
+    50
+);
+$settings->add($textfield);
+// Text area with editor for the email template.
 $emailtemplateeditor = new admin_setting_confightmleditor('bbbext_bnnotify/emailtemplate',
     new lang_string('emailtemplate', 'bbbext_bnnotify'),
     new lang_string('emailtemplate:desc', 'bbbext_bnnotify'),
@@ -31,3 +48,13 @@ $emailtemplateeditor = new admin_setting_confightmleditor('bbbext_bnnotify/email
     PARAM_RAW
 );
 $settings->add($emailtemplateeditor);
+// Text area with editor for additional footer information.
+$emailfootereditor = new admin_setting_confightmleditor('bbbext_bnnotify/emailfooter',
+    new lang_string('emailfooter', 'bbbext_bnnotify'),
+    new lang_string('emailfooter:desc', 'bbbext_bnnotify'),
+    '',
+    PARAM_RAW,
+    '0',
+    '4'
+);
+$settings->add($emailfootereditor);

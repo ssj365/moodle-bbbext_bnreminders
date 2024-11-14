@@ -37,12 +37,17 @@ class send_email_reminders extends adhoc_task {
      *
      * @return void
      */
-    public function execute() {
+    public function execute(): void {
         $customdata = $this->get_custom_data();
         $emailsubject = $customdata->subject;
         $emailhtmlmessage = $customdata->htmlmessage;
+        $emailfooter = $customdata->emailfooter;
         $instance = instance::get_from_instanceid($customdata->instanceid);
         $cmid = $instance->get_cm_id();
+        $options =
+        [
+            'context' => $instance->get_context(),
+        ];
         foreach ($customdata->emails as $email) {
             $user = core_user::get_noreply_user();
             $user->email = $email;
@@ -53,11 +58,12 @@ class send_email_reminders extends adhoc_task {
                         'unsubscribeurl' => $unsubscribeurl->out(false),
                     ]
                 );
+            $fullmessage .= $emailfooter;
             email_to_user(
                 $user,
                 core_user::get_noreply_user(),
                 $emailsubject,
-                html_to_text($fullmessage),
+                format_text(html_to_text($fullmessage), FORMAT_MOODLE, ['filter' => true]),
                 $fullmessage
             );
         }

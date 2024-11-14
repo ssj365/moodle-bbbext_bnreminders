@@ -18,6 +18,7 @@ namespace bbbext_bnnotify;
 
 use bbbext_bnnotify\local\persistent\guest_email;
 use core_user;
+use moodle_url;
 use mod_bigbluebuttonbn\instance;
 
 /**
@@ -114,11 +115,11 @@ class subscription_utils {
      * @param int|null $cmid
      * @param string|null $email
      * @param int|null $userid
-     * @return \moodle_url
+     * @return moodle_url
      */
-    public static function get_unsubscribe_url(?int $cmid, ?string $email = null, ?int $userid = null): \moodle_url {
+    public static function get_unsubscribe_url(?int $cmid, ?string $email = null, ?int $userid = null): moodle_url {
         $params = ['email' => $email, 'userid' => $userid, 'cmid' => $cmid];
         $params = array_filter($params, fn($value) => !is_null($value));
-        return new \moodle_url('/mod/bigbluebuttonbn/extension/bnnotify/subscription.php', $params);
+        return new moodle_url('/mod/bigbluebuttonbn/extension/bnnotify/subscription.php', $params);
     }
 }

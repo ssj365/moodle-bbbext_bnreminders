@@ -21,6 +21,8 @@ use bbbext_bnnotify\local\persistent\guest_email;
 use bbbext_bnnotify\subscription_utils;
 use bbbext_bnnotify\utils;
 use core\task\scheduled_task;
+use context_system;
+use moodle_url;
 use DateInterval;
 use DateTime;
 use mod_bigbluebuttonbn\instance;
@@ -69,6 +71,7 @@ class check_emails_reminder extends scheduled_task {
 
             $emailsubject = $this->get_subject($instance);
             $emailhtmlmessage = $this->get_html_message($instance);
+            $emailfooter = $this->get_footer($instance);
             foreach ($allreminders as $reminder) {
                 $interval = new DateInterval($reminder->timespan);
                 $openingtime = $instance->get_instance_var('openingtime');
@@ -93,7 +96,8 @@ class check_emails_reminder extends scheduled_task {
                         $userstoemail[] = $user;
                     }
                     // Do it in batch.
-                    for ($i = 0; $i < count($userstoemail); $i += self::MAX_EMAIL_PER_TASK) {
+                    $useremails = count($userstoemail);
+                    for ($i = 0; $i < $useremails; $i += self::MAX_EMAIL_PER_TASK) {
                         $emailreminder = new send_email_reminders_message();
                         $emailreminder->set_custom_data(
                             [
@@ -102,6 +106,7 @@ class check_emails_reminder extends scheduled_task {
                                 'reminderid' => $reminder->id,
                                 'subject' => $emailsubject,
                                 'htmlmessage' => $emailhtmlmessage,
+                                'emailfooter' => $emailfooter,
                             ]);
                         \core\task\manager::queue_adhoc_task($emailreminder);
                     }
@@ -118,7 +123,8 @@ class check_emails_reminder extends scheduled_task {
                         }
                         sort($allemails);
                         // Do it in batch.
-                        for ($i = 0; $i < count($allemails); $i += self::MAX_EMAIL_PER_TASK) {
+                        $alluseremails = count($allemails);
+                        for ($i = 0; $i < $alluseremails; $i += self::MAX_EMAIL_PER_TASK) {
                             $emailreminder = new send_email_reminders();
                             $emailreminder->set_custom_data(
                                 [
@@ -127,6 +133,7 @@ class check_emails_reminder extends scheduled_task {
                                     'reminderid' => $reminder->id,
                                     'subject' => $emailsubject,
                                     'htmlmessage' => $emailhtmlmessage,
+                                    'emailfooter' => $emailfooter,
                                 ]);
                             \core\task\manager::queue_adhoc_task($emailreminder);
                         }
@@ -144,7 +151,8 @@ class check_emails_reminder extends scheduled_task {
      * @return string
      */
     protected function get_subject(instance $instance): string {
-        return get_string('email_reminder_subject', 'bbbext_bnnotify', $this->get_string_vars($instance));
+        $htmlsubject = $this->get_email_content('emailsubject', $instance);
+        return $htmlsubject;
     }
 
     /**
@@ -171,10 +179,35 @@ class check_emails_reminder extends scheduled_task {
      * @return string
      */
     protected function get_html_message(instance $instance): string {
-        $htmlmessage = get_config('bbbext_bnnotify', 'emailtemplate');
-        $vars = $this->get_string_vars($instance);
-        $htmlmessage = utils::replace_vars_in_text($vars, $htmlmessage);
+        $htmlmessage = $this->get_email_content('emailtemplate', $instance);
         return $htmlmessage;
+    }
+
+    /**
+     * Get the footer of the email.
+     *
+     * @param instance $instance
+     * @return string
+     */
+    protected function get_footer(instance $instance): string {
+        $htmlfooter = $this->get_email_content('emailfooter', $instance);
+        if (!empty($htmlfooter)) {
+            $htmlfooter = '<br>' . $htmlfooter;
+        }
+        return $htmlfooter ?? '';
+    }
+
+    /**
+     * Get the processed message content.
+     * @param string $config The configuration setting
+     * @param instance $instance
+     * @return string
+     */
+    protected function get_email_content(string $config, instance $instance): string {
+        $text = get_config('bbbext_bnnotify', $config);
+        $vars = $this->get_string_vars($instance);
+        $emailcontent = utils::replace_vars_in_text($vars, $text);
+        return $emailcontent;
     }
 
 }
