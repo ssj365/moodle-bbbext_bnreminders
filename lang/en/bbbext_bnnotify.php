@@ -28,7 +28,6 @@ $string['addreminder'] = 'Add reminder';
 $string['bnnotify'] = 'Send email reminders before the session starts';
 $string['bnnotify:enabled'] = 'Send email reminders before session';
 $string['bnnotify:guestenabled'] = 'Add guests to the list of users to send the reminder to';
-$string['bnnotify:header'] = 'Reminders';
 $string['bnnotify:preferences'] = 'BigBlueButton reminders preferences';
 $string['bnnotify_help'] = 'If enabled and a start date is set, send email reminders for users registered to the activity';
 $string['check_emails_reminder'] = 'Check emails reminder';
@@ -55,7 +54,7 @@ $string['emailtemplate:desc'] = 'Email template when sending reminders.The follo
 </ul>';
 $string['error:duplicate'] = 'You have already one reminder for this meeting for the same time span';
 $string['messageprovider:reminder'] = 'BigBlueButton email reminder';
-$string['pluginname'] = 'BigBlueButton BN Notifications';
+$string['pluginname'] = 'BigBlueButton BN Notify';
 $string['reminder'] = 'Reminder';
 $string['reminder:message'] = 'before meeting starts';
 $string['reminder:openingtime:disabled'] = 'Opening time is disabled';
