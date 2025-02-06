@@ -55,6 +55,7 @@ $string['emailtemplate:desc'] = 'Email template when sending reminders.The follo
 $string['error:duplicate'] = 'You have already one reminder for this meeting for the same time span';
 $string['messageprovider:reminder'] = 'BigBlueButton email reminder';
 $string['pluginname'] = 'BigBlueButton BN Notify';
+$string['privacy:metadata'] = 'This extension does not store any personal data.';
 $string['reminder'] = 'Reminder';
 $string['reminder:message'] = 'before meeting starts';
 $string['reminder:openingtime:disabled'] = 'Opening time is disabled';
