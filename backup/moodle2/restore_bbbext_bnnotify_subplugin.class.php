@@ -32,15 +32,17 @@ class restore_bbbext_bnnotify_subplugin extends restore_subplugin {
     protected function define_bigbluebuttonbn_subplugin_structure() {
         $paths = [];
 
-        $elename = $this->get_namefor('bigbluebuttonbn');
+        $elename = $this->get_namefor('');
         // We used get_recommended_name() so this works.
         $elepath = $this->get_pathfor('/bbbext_bnnotify');
         $paths[] = new restore_path_element($elename, $elepath);
 
+        $elename = $this->get_namefor('rem');
         // We used get_recommended_name() so this works.
         $elepath = $this->get_pathfor('/bbbext_bnnotify_rem');
         $paths[] = new restore_path_element($elename, $elepath);
 
+        $elename = $this->get_namefor('guests');
         // We used get_recommended_name() so this works.
         $elepath = $this->get_pathfor('/bbbext_bnnotify_guests');
         $paths[] = new restore_path_element($elename, $elepath);
@@ -54,7 +56,7 @@ class restore_bbbext_bnnotify_subplugin extends restore_subplugin {
      * @param array $data The data in object form
      * @return void
      */
-    protected function process_bbbext_bnnotify_guests_bigbluebuttonbn(array $data) {
+    public function process_bbbext_bnnotify_guests(array $data) {
         global $DB;
         $data = (object) $data;
         // Apply modifications.
@@ -74,7 +76,7 @@ class restore_bbbext_bnnotify_subplugin extends restore_subplugin {
      *
      * @param mixed $data
      */
-    public function process_bbbext_bnnotify_bigbluebuttonbn($data) {
+    public function process_bbbext_bnnotify($data) {
         global $DB;
 
         $data = (object) $data;
@@ -87,7 +89,7 @@ class restore_bbbext_bnnotify_subplugin extends restore_subplugin {
      *
      * @param mixed $data
      */
-    public function process_bbbext_bnnotify_rem_bigbluebuttonbn($data) {
+    public function process_bbbext_bnnotify_rem($data) {
         global $DB;
 
         $data = (object) $data;

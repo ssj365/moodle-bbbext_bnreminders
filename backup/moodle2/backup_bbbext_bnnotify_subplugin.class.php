@@ -30,30 +30,20 @@ class backup_bbbext_bnnotify_subplugin extends backup_subplugin {
      * @return backup_subplugin_element
      */
     protected function define_bigbluebuttonbn_subplugin_structure() {
-
         // Create XML elements.
         $subplugin = $this->get_subplugin_element();
+        $subpluginwrapper = new backup_nested_element($this->get_recommended_name());
+
         $subpluginelementmain = new backup_nested_element(
             'bbbext_bnnotify',
             null,
-            ['reminderenabled']
+            ['reminderenabled', 'remindertoguestsenabled']
         );
-        // Set source to populate the data.
-        $subpluginelementmain->set_source_table(
-            'bbbext_bnnotify',
-            ['bigbluebuttonbnid' => backup::VAR_PARENTID]
-        );
-
         $subpluginelementreminder = new backup_nested_element(
             'bbbext_bnnotify_rem',
             null,
-            ['timespan']
+            ['timespan', 'lastsent']
         );
-        $subpluginelementreminder->set_source_table(
-            'bbbext_bnnotify_rem',
-            ['bigbluebuttonbnid' => backup::VAR_PARENTID]
-        );
-
         $subpluginelementguest = new backup_nested_element('bbbext_bnnotify_guests', ['id'],
             [
                 'bigbluebuttonbnid',
@@ -65,7 +55,22 @@ class backup_bbbext_bnnotify_subplugin extends backup_subplugin {
                 'timemodified',
                 'timecreated',
             ]);
+
         // Connect XML elements into the tree.
+        $subplugin->add_child($subpluginwrapper);
+        $subpluginwrapper->add_child($subpluginelementmain);
+        $subpluginwrapper->add_child($subpluginelementreminder);
+        $subpluginwrapper->add_child($subpluginelementguest);
+
+        // Set source to populate the data.
+        $subpluginelementmain->set_source_table(
+            'bbbext_bnnotify',
+            ['bigbluebuttonbnid' => backup::VAR_PARENTID]
+        );
+        $subpluginelementreminder->set_source_table(
+            'bbbext_bnnotify_rem',
+            ['bigbluebuttonbnid' => backup::VAR_PARENTID]
+        );
 
         // To know if we are including userinfo.
         $userinfo = $this->get_setting_value('userinfo');
@@ -74,10 +79,6 @@ class backup_bbbext_bnnotify_subplugin extends backup_subplugin {
             $subpluginelementguest->set_source_table('bbbext_bnnotify_guests',
                 ['bigbluebuttonbnid' => backup::VAR_PARENTID]);
         }
-
-        $subplugin->add_child($subpluginelementmain);
-        $subplugin->add_child($subpluginelementreminder);
-        $subplugin->add_child($subpluginelementguest);
         return $subplugin;
     }
 }
