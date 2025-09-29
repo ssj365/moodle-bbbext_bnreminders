@@ -84,6 +84,10 @@ Troubleshooting
 * Emails Not Sent/Received: Ensure cron is running regularly as email delivery depends on scheduled cron tasks.
 
 
+Known Limitations
+============
+* **Guest User Reminder Support:** The subplugin currently does not support sending reminder emails to guest users. Guest email addresses are not stored in the subplugin for scheduling emails.
+
 Requirements
 ============
 Requires BigBlueButtonBN module version > 2022112802
