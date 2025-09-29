@@ -54,6 +54,8 @@ $string['emailtemplate:desc'] = 'Email template when sending reminders.The follo
 </ul>';
 $string['error:duplicate'] = 'You have already one reminder for this meeting for the same time span';
 $string['messageprovider:reminder'] = 'BigBlueButton email reminder';
+$string['mod_form_bnnotify'] = 'Email notifications';
+$string['mod_form_bnnotify_desc'] = 'Send reminders to students as notifications.';
 $string['pluginname'] = 'BigBlueButton BN Notify';
 $string['privacy:metadata'] = 'This extension does not store any personal data.';
 $string['reminder'] = 'Reminder';

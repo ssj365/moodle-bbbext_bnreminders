@@ -202,7 +202,9 @@ class mod_form_addons extends \mod_bigbluebuttonbn\local\extension\mod_form_addo
      */
     public function add_fields(): void {
         global $OUTPUT;
-        $this->mform->addElement('header', 'bnnotify', get_string('pluginname', 'bbbext_bnnotify'));
+        $this->mform->addElement('header', 'bnnotify', get_string('mod_form_bnnotify', 'bbbext_bnnotify'));
+        $this->mform->addElement('static', 'bnnotify_desc', '', get_string('mod_form_bnnotify_desc', 'bbbext_bnnotify'));
+
         $this->mform->addHelpButton('bnnotify', 'bnnotify', 'bbbext_bnnotify');
         $this->mform->addElement('advcheckbox', 'bnnotify_reminderenabled',
             get_string('bnnotify:enabled', 'bbbext_bnnotify'));
