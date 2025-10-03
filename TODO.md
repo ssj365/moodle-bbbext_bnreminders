@@ -1,4 +1,4 @@
-# TODO List for BigBlueButton Extension - BN Notify Subplugin
+# TODO List for BigBlueButton Extension - BN Reminders Subplugin
 This file lists the known subplugin issues that need to be fixed. Each task includes a reference to its corresponding Jira ticket for additional details.
 
 **Hide Settings for RecordingsOnly**  

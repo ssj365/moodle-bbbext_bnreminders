@@ -1,95 +1,91 @@
-BigBlueButton Extension - BN Notify Subplugin
-=======================
-* Copyright: Blindside Networks Inc
-* License:  GNU GENERAL PUBLIC LICENSE Version 3
+# BigBlueButton BN Reminders
+*(formerly BN Notify)*
+
+**Never let students miss a session again.**
+BN Reminders is a BigBlueButton extension for Moodle that improves attendance and engagement by sending timely, customizable reminder emails before sessions.
+
+Developed and supported by **Blindside Networks** — the company that started the BigBlueButton project.
+
+---
+
+## ✨ Features
+- **Automated Email Reminders** – Notify students at predefined intervals (e.g., 1 day or 1 hour before).
+- **Customizable Email Templates** – Personalize reminder messages with placeholders like `{$url}`, `{$course_fullname}`, `{$date}`, `{$name}`.
+- **Subscription Management** – Allow users to manage preferences or unsubscribe directly from emails.
+- **Course Integration** – Add reminders per BigBlueButton activity.
+- **Admin Control** – Configure defaults globally via *Site administration > Plugins > BigBlueButton*.
+
+---
+
+## ⚡ Why Choose BN Reminders?
+- **Boost Attendance** – Students won’t forget scheduled sessions.
+- **Improve Engagement** – Timely communication builds better learning habits.
+- **Seamless Integration** – Works natively with BigBlueButtonBN.
+- **Trusted Development** – Backed by Blindside Networks, creators of BigBlueButton.
+
+---
+
+## 📦 Installation
+
+### Requirements
+- Moodle with BigBlueButtonBN module (≥ 2022112802).
+- Cron enabled for scheduled tasks (email delivery).
+
+### From GitHub
+```bash
+git clone https://github.com/blindsidenetworks-ps/moodle-bbbext_bnreminders.git
+mv moodle-bbbext_bnreminders /var/www/html/moodle/mod/bigbluebuttonbn/extension/bnreminders
+php admin/cli/upgrade.php
+```
+
+### Manual
+
+1. Download and extract the ZIP.
+2. Place the folder under: mod/bigbluebuttonbn/extension/
+3. Rename it to bnreminders.
+4. Complete installation via Moodle’s Admin UI.
+
+---
+
+## ⚙️ Configuration
+
+- **Admin settings:** Site administration > Plugins > BigBlueButton > Manage extensions
+- **Activity settings:** Add reminders directly within each BigBlueButton activity.
+- **Template editing:** Use variables like:
+***{$url}*** – Activity URL
+***{$course_fullname}*** – Course name
+***{$date}*** – Session date/time
+***{$name}*** – Meeting name
+
+User preferences: Students can opt in/out or unsubscribe directly from reminder emails.
+
+---
+
+## ❗ Troubleshooting
+
+- **Emails not sent** – Check that cron is running regularly.
+- **No reminders available** – Verify the BigBlueButton activity has a scheduled start date.
+
+---
+
+## 🧩 Version Compatibility
+
+| Moodle Version | Plugin Branch | Notes                                |
+|----------------|---------------|--------------------------------------|
+| Moodle 4.5+    | main          | Requires BigBlueButtonBN ≥ 2024100700 |
+
+---
+
+## 📣 Support & Feedback
+
+File issues and feature requests via the GitHub tracker
 
 
-Overview
-===========
-The BN Notify subplugin enhances the BigBlueButtonBN module by sending automated reminder emails to users before a session starts. These reminders include a link to join the meeting and are sent to the email address registered with the user's account.
+For commercial support (hosting, integration, customization), visit [Blindside Networks](https://blindsidenetworks.com/)
 
+---
 
-Features
-===========
-* **Automated Email Reminders:** Send reminder emails to users at predefined intervals before a session starts.
-* **Customizable Email Content:** Modify the text of the emails sent to users.
-* **Subscription Management:** Allow users to manage their preferences for receiving reminder emails.
+## 👥 Credits
 
-
-Installation
-============
-Prerequisites
-------------
-* Moodle environment with BigBlueButtonBN module installed.
-* Cron must be operational to ensure timely delivery of reminders.
-
-Git installation
-------------
-1. Clone the repository:
-
-`git clone https://github.com/blindsidenetworks-ps/moodle-bbbext_bnnotify.git`
-
-2. Rename the downloaded directory:
-
-`mv moodle-bbbext_bnnotify bnnotify`
-
-3. Move the folder to the Moodle BigBlueButtonBN extensions directory:
-
-`mv bnnotify /var/www/html/moodle/mod/bigbluebuttonbn/extension/`
-
-4. Run the Moodle upgrade script:
-
-`sudo /usr/bin/php /var/www/html/moodle/admin/cli/upgrade.php`
-
-Manual installation
-------------
-1. Download the sub plugin zip file and extract it.
-2. Place the extracted folder into `mod/bigbluebuttonbn/extension/`
-3. Rename the folder `bnnotify`
-4. Access Moodle's Admin UI at `Site administration > Plugins > Install plugins` to complete the installation.
-
-
-Configuration
-============
-Access the subplugin configuration under
-`Site Administration > Plugins > BigBlueButton > Manage BigBlueButton extension plugins`
-
-Here, admins can enable/disable the subplugin, manage settings, or uninstall it.
-
-
-Usage
-============
-Setting Up Reminder Emails
-------------
-Configure reminder emails via the BigBlueButton activity settings. Set the start date for the session, then use the "Add reminder" button to specify when reminders should be sent (e.g., 1 hour, 1 day before the session).
-
-Setting Up Reminder Emails
-------------
-Modify the email templates from the subplugin settings. Available variables include:
-* `{$url}`: Activity URL.
-* `{$course_fullname}`: Full name of the course.
-* `{$course_shortname}`: Short name of the course.
-* `{$date}`: Date and time of the meeting.
-* `{$name}`: Name of the meeting.
-
-Managing Email Subscriptions
-------------
-Users can manage their email reminder preferences through:
-* User Preferences: Navigate to the Preferences Page under BigBlueButton reminders preferences.
-* Unsubscription Link: Each email contains an unsubscription link allowing users to opt-out.
-
-
-Troubleshooting
-============
-* Emails Not Sent/Received: Ensure cron is running regularly as email delivery depends on scheduled cron tasks.
-
-
-Known Limitations
-============
-* **Guest User Reminder Support:** The subplugin currently does not support sending reminder emails to guest users. Guest email addresses are not stored in the subplugin for scheduling emails.
-
-Requirements
-============
-Requires BigBlueButtonBN module version > 2022112802
-
-For more detailed updates and support, visit the [BN Notify Subplugin GitHub Repository](https://github.com/blindsidenetworks-ps/moodle-bbbext_bnnotify)
+Maintained by Blindside Networks, creators of BigBlueButton.
+Released under the GNU GPL v3 License.

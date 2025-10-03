@@ -17,23 +17,23 @@
 /**
  * Plugin overrides are located here
  *
- * @package     bbbext_bnnotify
+ * @package     bbbext_bnreminders
  * @copyright   2024 Laurent David - CALL Learning <laurent@call-learning.fr>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use bbbext_bnnotify\local\persistent\guest_email;
-use bbbext_bnnotify\subscription_utils;
-use bbbext_bnnotify\utils;
+use bbbext_bnreminders\local\persistent\guest_email;
+use bbbext_bnreminders\subscription_utils;
+use bbbext_bnreminders\utils;
 
 /**
  * Add icon.
  *
  * @return string[]
  */
-function bbbext_bnnotify_get_fontawesome_icon_map() {
+function bbbext_bnreminders_get_fontawesome_icon_map() {
     return [
-        'bbbext_bnnotify:i/bell' => 'fa-bell-o',
+        'bbbext_bnreminders:i/bell' => 'fa-bell-o',
     ];
 }
 
@@ -49,7 +49,7 @@ function bbbext_bnnotify_get_fontawesome_icon_map() {
  * @param array $options additional options affecting the file serving
  * @return bool false if file not found, does not return if found - just send the file
  */
-function bbbext_bnnotify_pluginfile($course,
+function bbbext_bnreminders_pluginfile($course,
     $cm,
     context $context,
     $filearea,
@@ -79,7 +79,7 @@ function bbbext_bnnotify_pluginfile($course,
 
     $relativepath = implode('/', $args);
 
-    $fullpath = "/{$context->id}/bbbext_bnnotify/$filearea/$itemid/$relativepath";
+    $fullpath = "/{$context->id}/bbbext_bnreminders/$filearea/$itemid/$relativepath";
 
     $fs = get_file_storage();
     $file = $fs->get_file_by_hash(sha1($fullpath));
@@ -100,23 +100,23 @@ function bbbext_bnnotify_pluginfile($course,
  * @return void
  * @throws coding_exception
  */
-function bbbext_bnnotify_extend_navigation_user_settings(
+function bbbext_bnreminders_extend_navigation_user_settings(
     navigation_node $useraccount,
     stdClass $user,
     context_user $context,
     stdClass $course,
     context_course $coursecontext) {
-    $enabled = \core_plugin_manager::instance()->get_plugin_info('bbbext_bnnotify')->is_enabled();
+    $enabled = \core_plugin_manager::instance()->get_plugin_info('bbbext_bnreminders')->is_enabled();
     if (!$enabled) {
         return;
     }
     $parent = $useraccount->parent->find('useraccount', navigation_node::TYPE_CONTAINER);
     $parent->add(
         get_string(
-            'bnnotify:preferences',
-            'bbbext_bnnotify'
+            'bnreminders:preferences',
+            'bbbext_bnreminders'
         ),
-        new moodle_url('/mod/bigbluebuttonbn/extension/bnnotify/managesubscriptions.php')
+        new moodle_url('/mod/bigbluebuttonbn/extension/bnreminders/managesubscriptions.php')
     );
 }
 
@@ -129,7 +129,7 @@ function bbbext_bnnotify_extend_navigation_user_settings(
  * @param int $instanceid
  * @return void
  */
-function bbbext_bnnotify_meeting_add_guests(array $emails, int $instanceid): void {
+function bbbext_bnreminders_meeting_add_guests(array $emails, int $instanceid): void {
     global $USER;
     foreach ($emails as $email) {
         guest_email::create_guest_mail_record($email, $instanceid, $USER->id);

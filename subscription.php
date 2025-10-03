@@ -17,13 +17,13 @@
 /**
  * Get and set subscription status for a user or an email.
  *
- * @package   bbbext_bnnotify
+ * @package   bbbext_bnreminders
  * @copyright 2022 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David  (laurent [at] call-learning [dt] fr)
  */
 
-use bbbext_bnnotify\subscription_utils;
+use bbbext_bnreminders\subscription_utils;
 use core\notification;
 use mod_bigbluebuttonbn\instance;
 use mod_bigbluebuttonbn\local\exceptions\server_not_available_exception;
@@ -39,22 +39,22 @@ $userid = optional_param('userid', null, PARAM_INT);
 $cmid = required_param('cmid', PARAM_INT);
 $instance = instance::get_from_cmid($cmid);
 if (empty($instance)) {
-    throw new moodle_exception('activitynotfound', 'bbbext_bnnotify');
+    throw new moodle_exception('activitynotfound', 'bbbext_bnreminders');
 }
 // Get the guest matching guest access link.
 $PAGE->set_url(
-    '/mod/bigbluebuttonbn/extension/bnnotify/subscription.php',
+    '/mod/bigbluebuttonbn/extension/bnreminders/subscription.php',
     ['cmid' => $cmid, 'email' => $email]
 );
 $title = get_string(
     'unsubscribe:title:meeting',
-    'bbbext_bnnotify',
+    'bbbext_bnreminders',
     $instance->get_course()->shortname . ': ' . format_string($instance->get_meeting_name())
 );
 $PAGE->set_title($title);
 $PAGE->set_heading($title);
 $PAGE->set_pagelayout('standard');
-$form = new \bbbext_bnnotify\form\unsubscribe(null);
+$form = new \bbbext_bnreminders\form\unsubscribe(null);
 $form->set_data(['email' => $email, 'cmid' => $cmid, 'userid' => $userid]);
 // Specific for the tests: we allow to set the password in the form here.
 if (defined('BEHAT_SITE_RUNNING')) {
@@ -65,8 +65,8 @@ if ($userid) {
 }
 $formcontent = '';
 $managepreferences = new single_button(
-    new moodle_url('/mod/bigbluebuttonbn/extension/bnnotify/managesubscriptions.php'),
-    get_string('unsubscribe:managepreferences', 'bbbext_bnnotify'),
+    new moodle_url('/mod/bigbluebuttonbn/extension/bnreminders/managesubscriptions.php'),
+    get_string('unsubscribe:managepreferences', 'bbbext_bnreminders'),
     'get',
 );
 $managepreferences->class = 'mdl-align';
@@ -75,7 +75,7 @@ if ($form->is_cancelled()) {
         $formcontent = $OUTPUT->render($managepreferences);
     }
     notification::add(
-        get_string('subscribed:cancel', 'bbbext_bnnotify'),
+        get_string('subscribed:cancel', 'bbbext_bnreminders'),
         \core\output\notification::NOTIFY_INFO);
 
 } else if ($data = $form->get_data()) {
@@ -95,7 +95,7 @@ if ($form->is_cancelled()) {
             $formcontent = $OUTPUT->render($managepreferences);
         }
         notification::add(
-            get_string('unsubscribed', 'bbbext_bnnotify'),
+            get_string('unsubscribed', 'bbbext_bnreminders'),
             \core\output\notification::NOTIFY_INFO);
     } catch (server_not_available_exception $e) {
         bigbluebutton_proxy::handle_server_not_available($instance);

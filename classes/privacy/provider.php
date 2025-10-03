@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnnotify\privacy;
+namespace bbbext_bnreminders\privacy;
 
 /**
  * Privacy class for requesting user data.
  *
- * @package   bbbext_bnnotify
+ * @package   bbbext_bnreminders
  * @copyright 2025 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Jesus Federico  (jesus [at] blindsidenetworks [dt] com)

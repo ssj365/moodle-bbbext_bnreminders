@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnnotify\bigbluebuttonbn;
+namespace bbbext_bnreminders\bigbluebuttonbn;
 
 use core_date;
 use DateInterval;
@@ -25,11 +25,11 @@ use ReflectionClass;
 /**
  * Check the mod instance helper class.
  *
- * @package   bbbext_bnnotify
+ * @package   bbbext_bnreminders
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
- * @coversDefaultClass  \bbbext_bnnotify\bigbluebuttonbn\mod_instance_helper
+ * @coversDefaultClass  \bbbext_bnreminders\bigbluebuttonbn\mod_instance_helper
  */
 final class mod_instance_helper_test extends \advanced_testcase {
     /**
@@ -51,13 +51,13 @@ final class mod_instance_helper_test extends \advanced_testcase {
             'course' => $course,
         ])->id);
 
-        $bnnotifygenerator = $this->getDataGenerator()->get_plugin_generator('bbbext_bnnotify');
-        $bnnotifygenerator->enable_reminder($bbbinstance->get_instance_id());
-        $bnnotifygenerator->add_reminder([
+        $bnremindersgenerator = $this->getDataGenerator()->get_plugin_generator('bbbext_bnreminders');
+        $bnremindersgenerator->enable_reminder($bbbinstance->get_instance_id());
+        $bnremindersgenerator->add_reminder([
             'bigbluebuttonbnid' => $bbbinstance->get_instance_id(),
             'timespan' => 'PT1H',
         ]);
-        $bnnotifygenerator->add_reminder([
+        $bnremindersgenerator->add_reminder([
             'bigbluebuttonbnid' => $bbbinstance->get_instance_id(),
             'timespan' => 'PT2H',
             'lastsent' => time(),
@@ -68,11 +68,11 @@ final class mod_instance_helper_test extends \advanced_testcase {
         $synparametersref->setAccessible(true);
         // Simulate form sent.
         $data = $bbbinstance->get_instance_data();
-        $data->bnnotify_openingtime = time();
-        $data->bnnotify_reminderenabled = true;
-        $data->bnnotify_remindertoguestsenabled = true;
-        $data->bnnotify_paramcount = 3;
-        $data->bnnotify_timespan = ['PT1H', 'PT2H', 'PT1D'];
+        $data->bnreminders_openingtime = time();
+        $data->bnreminders_reminderenabled = true;
+        $data->bnreminders_remindertoguestsenabled = true;
+        $data->bnreminders_paramcount = 3;
+        $data->bnreminders_timespan = ['PT1H', 'PT2H', 'PT1D'];
         $synparametersref->invokeArgs($modinstancehelper, [$data]);
 
         // Three.
@@ -84,8 +84,8 @@ final class mod_instance_helper_test extends \advanced_testcase {
             array_values(array_map(fn($reminder) => $reminder->timespan, $existingreminders)));
 
         $data = $bbbinstance->get_instance_data();
-        $data->bnnotify_paramcount = 2;
-        $data->bnnotify_timespan = ['PT1H', 'PT2D'];
+        $data->bnreminders_paramcount = 2;
+        $data->bnreminders_timespan = ['PT1H', 'PT2D'];
         $synparametersref->invokeArgs($modinstancehelper, [$data]);
 
         // Two disappeared and one added.

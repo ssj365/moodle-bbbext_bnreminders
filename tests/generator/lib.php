@@ -14,18 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-use bbbext_bnnotify\bigbluebuttonbn\mod_instance_helper;
-use bbbext_bnnotify\utils;
+use bbbext_bnreminders\bigbluebuttonbn\mod_instance_helper;
+use bbbext_bnreminders\utils;
 
 /**
  * Generator class
  *
- * @package   bbbext_bnnotify
+ * @package   bbbext_bnreminders
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
  */
-class bbbext_bnnotify_generator extends \component_generator_base {
+class bbbext_bnreminders_generator extends \component_generator_base {
     /**
      * Enable reminder.
      *

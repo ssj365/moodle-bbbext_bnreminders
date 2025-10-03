@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnnotify\task;
+namespace bbbext_bnreminders\task;
 
-use bbbext_bnnotify\subscription_utils;
-use bbbext_bnnotify\utils;
+use bbbext_bnreminders\subscription_utils;
+use bbbext_bnreminders\utils;
 use core_date;
 use DateInterval;
 use DateTime;
@@ -26,11 +26,11 @@ use mod_bigbluebuttonbn\instance;
 /**
  * Check email reminder class.
  *
- * @package   bbbext_bnnotify
+ * @package   bbbext_bnreminders
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
- * @coversDefaultClass  \bbbext_bnnotify\task\check_emails_reminder
+ * @coversDefaultClass  \bbbext_bnreminders\task\check_emails_reminder
  */
 final class check_email_reminder_test extends \advanced_testcase {
 
@@ -162,9 +162,9 @@ final class check_email_reminder_test extends \advanced_testcase {
         global $DB;
         $emailsink = $this->redirectEmails();
         \phpunit_util::stop_message_redirection();
-        $bnnotifygenerator = $this->getDataGenerator()->get_plugin_generator('bbbext_bnnotify');
-        $bnnotifygenerator->enable_reminder($this->bbbinstance->get_instance_id());
-        $bnnotifygenerator->add_reminder([
+        $bnremindersgenerator = $this->getDataGenerator()->get_plugin_generator('bbbext_bnreminders');
+        $bnremindersgenerator->enable_reminder($this->bbbinstance->get_instance_id());
+        $bnremindersgenerator->add_reminder([
             'bigbluebuttonbnid' => $this->bbbinstance->get_instance_id(),
             'timespan' => $reminderinterval,
         ]);
@@ -211,16 +211,16 @@ final class check_email_reminder_test extends \advanced_testcase {
     ): void {
         global $DB;
         $emailsink = $this->redirectEmails();
-        $bnnotifygenerator = $this->getDataGenerator()->get_plugin_generator('bbbext_bnnotify');
-        $bnnotifygenerator->enable_reminder($this->bbbinstance->get_instance_id());
+        $bnremindersgenerator = $this->getDataGenerator()->get_plugin_generator('bbbext_bnreminders');
+        $bnremindersgenerator->enable_reminder($this->bbbinstance->get_instance_id());
         foreach ($guests as $guest) {
-            $bnnotifygenerator->add_guest([
+            $bnremindersgenerator->add_guest([
                 'bigbluebuttonbnid' => $this->bbbinstance->get_instance_id(),
                 'email' => $guest,
             ]);
         }
-        $bnnotifygenerator->enable_reminder_for_guest($this->bbbinstance->get_instance_id());
-        $bnnotifygenerator->add_reminder([
+        $bnremindersgenerator->enable_reminder_for_guest($this->bbbinstance->get_instance_id());
+        $bnremindersgenerator->add_reminder([
             'bigbluebuttonbnid' => $this->bbbinstance->get_instance_id(),
             'timespan' => $reminderinterval,
         ]);

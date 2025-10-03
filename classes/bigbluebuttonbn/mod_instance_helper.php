@@ -14,14 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnnotify\bigbluebuttonbn;
+namespace bbbext_bnreminders\bigbluebuttonbn;
 
 use stdClass;
 
 /**
  * Class defining a way to deal with instance save/update/delete in extension
  *
- * @package   bbbext_bnnotify
+ * @package   bbbext_bnreminders
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -30,16 +30,16 @@ class mod_instance_helper extends \mod_bigbluebuttonbn\local\extension\mod_insta
     /**
      * This is the name of the table that will be used to store additional data for the instance.
      */
-    const SUBPLUGIN_TABLE = 'bbbext_bnnotify';
+    const SUBPLUGIN_TABLE = 'bbbext_bnreminders';
 
     /**
      * This is the name of the table that will be used to store reminders.
      */
-    const SUBPLUGIN_REMINDERS_TABLE = 'bbbext_bnnotify_rem';
+    const SUBPLUGIN_REMINDERS_TABLE = 'bbbext_bnreminders_rem';
     /**
      * This is the name of the table that will be used to store guests.
      */
-    const SUBPLUGIN_GUESTS_TABLE = 'bbbext_bnnotify_guests';
+    const SUBPLUGIN_GUESTS_TABLE = 'bbbext_bnreminders_guests';
 
     /**
      * Runs any processes that must run before a bigbluebuttonbn insert/update.
@@ -51,7 +51,7 @@ class mod_instance_helper extends \mod_bigbluebuttonbn\local\extension\mod_insta
     }
 
     /**
-     * Make sure that the bbbext_bnnotify has the right parameters (and not more)
+     * Make sure that the bbbext_bnreminders has the right parameters (and not more)
      *
      * @param stdClass $bigbluebuttonbn
      * @return void
@@ -59,45 +59,45 @@ class mod_instance_helper extends \mod_bigbluebuttonbn\local\extension\mod_insta
     private function sync_additional_params(stdClass $bigbluebuttonbn): void {
         global $DB;
         // Checks first.
-        $count = $bigbluebuttonbn->bnnotify_paramcount ?? 0;
-        if (!empty($bigbluebuttonbn->bnnotify_timespan)) {
-            $bigbluebuttonbn->bnnotify_timespan = clean_param_array(
-                $bigbluebuttonbn->bnnotify_timespan, PARAM_TEXT, true
+        $count = $bigbluebuttonbn->bnreminders_paramcount ?? 0;
+        if (!empty($bigbluebuttonbn->bnreminders_timespan)) {
+            $bigbluebuttonbn->bnreminders_timespan = clean_param_array(
+                $bigbluebuttonbn->bnreminders_timespan, PARAM_TEXT, true
             );
-            if (empty($bigbluebuttonbn->bnnotify_timespan) &&
+            if (empty($bigbluebuttonbn->bnreminders_timespan) &&
                 (!(defined('PHPUNIT_TEST') && PHPUNIT_TEST) && !defined('BEHAT_SITE_RUNNING'))) {
-                debugging('bnnotify : The reminder contains invalid value.');
+                debugging('bnreminders : The reminder contains invalid value.');
             }
         }
-        if (!isset($bigbluebuttonbn->bnnotify_reminderenabled) ||
+        if (!isset($bigbluebuttonbn->bnreminders_reminderenabled) ||
             clean_param(
-                $bigbluebuttonbn->bnnotify_reminderenabled, PARAM_BOOL) != $bigbluebuttonbn->bnnotify_reminderenabled
+                $bigbluebuttonbn->bnreminders_reminderenabled, PARAM_BOOL) != $bigbluebuttonbn->bnreminders_reminderenabled
             ) {
             if (!(defined('PHPUNIT_TEST') && PHPUNIT_TEST) && !defined('BEHAT_SITE_RUNNING')) {
-                debugging('bnnotify : The enabled type contains invalid value.');
+                debugging('bnreminders : The enabled type contains invalid value.');
             }
             return;
         }
-        if (!isset($bigbluebuttonbn->bnnotify_remindertoguestsenabled) ||
-            clean_param($bigbluebuttonbn->bnnotify_remindertoguestsenabled, PARAM_BOOL) !=
-            $bigbluebuttonbn->bnnotify_remindertoguestsenabled) {
+        if (!isset($bigbluebuttonbn->bnreminders_remindertoguestsenabled) ||
+            clean_param($bigbluebuttonbn->bnreminders_remindertoguestsenabled, PARAM_BOOL) !=
+            $bigbluebuttonbn->bnreminders_remindertoguestsenabled) {
             if (!(defined('PHPUNIT_TEST') && PHPUNIT_TEST) && !defined('BEHAT_SITE_RUNNING')) {
-                debugging('bnnotify : The enabled type contains invalid value.');
+                debugging('bnreminders : The enabled type contains invalid value.');
             }
             return;
         }
         // First remove unwanted values.
         $rs = $DB->get_recordset(self::SUBPLUGIN_REMINDERS_TABLE, ['bigbluebuttonbnid' => $bigbluebuttonbn->id]);
         foreach ($rs as $existingreminder) {
-            if (empty($bigbluebuttonbn->bnnotify_timespan) ||
-                !in_array($existingreminder->timespan, $bigbluebuttonbn->bnnotify_timespan)) {
+            if (empty($bigbluebuttonbn->bnreminders_timespan) ||
+                !in_array($existingreminder->timespan, $bigbluebuttonbn->bnreminders_timespan)) {
                 $DB->delete_records(self::SUBPLUGIN_REMINDERS_TABLE, ['id' => $existingreminder->id]);
             }
         }
         $rs->close();
         for ($index = 0; $index < $count; $index++) {
             $queryfields = [];
-            $queryfields['timespan'] = $bigbluebuttonbn->bnnotify_timespan[$index];
+            $queryfields['timespan'] = $bigbluebuttonbn->bnreminders_timespan[$index];
             $queryfields['bigbluebuttonbnid'] = $bigbluebuttonbn->id;
 
             // Fetch a single record using get_record.
@@ -109,7 +109,7 @@ class mod_instance_helper extends \mod_bigbluebuttonbn\local\extension\mod_insta
                 $DB->insert_record(self::SUBPLUGIN_REMINDERS_TABLE, (object) $queryfields);
             } else {
                 // Check if openingtime has changed.
-                if ($bigbluebuttonbn->bnnotify_openingtime != $bigbluebuttonbn->openingtime) {
+                if ($bigbluebuttonbn->bnreminders_openingtime != $bigbluebuttonbn->openingtime) {
                     // If record exists, reset lastsent to 0 if opentime was updated.
 
                     // Prepare the update object including the id.
@@ -124,15 +124,15 @@ class mod_instance_helper extends \mod_bigbluebuttonbn\local\extension\mod_insta
         }
         $existingrecord = $DB->get_record(self::SUBPLUGIN_TABLE, ['bigbluebuttonbnid' => $bigbluebuttonbn->id]);
         if ($existingrecord) {
-            $existingrecord->reminderenabled = $bigbluebuttonbn->bnnotify_reminderenabled ?? false;
-            $existingrecord->remindertoguestsenabled = $bigbluebuttonbn->bnnotify_remindertoguestsenabled ?? false;;
+            $existingrecord->reminderenabled = $bigbluebuttonbn->bnreminders_reminderenabled ?? false;
+            $existingrecord->remindertoguestsenabled = $bigbluebuttonbn->bnreminders_remindertoguestsenabled ?? false;;
             $DB->update_record(self::SUBPLUGIN_TABLE, $existingrecord);
         } else {
             $DB->insert_record(self::SUBPLUGIN_TABLE,
                 [
                     'bigbluebuttonbnid' => $bigbluebuttonbn->id,
-                    'reminderenabled' => $bigbluebuttonbn->bnnotify_reminderenabled ?? false,
-                    'remindertoguestsenabled' => $bigbluebuttonbn->bnnotify_remindertoguestsenabled ?? false,
+                    'reminderenabled' => $bigbluebuttonbn->bnreminders_reminderenabled ?? false,
+                    'remindertoguestsenabled' => $bigbluebuttonbn->bnreminders_remindertoguestsenabled ?? false,
                 ]
             );
         }
@@ -168,6 +168,6 @@ class mod_instance_helper extends \mod_bigbluebuttonbn\local\extension\mod_insta
      * @return array
      */
     public function get_join_tables(): array {
-        return ['bbbext_bnnotify'];
+        return ['bbbext_bnreminders'];
     }
 }

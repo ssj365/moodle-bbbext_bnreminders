@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnnotify\output;
+namespace bbbext_bnreminders\output;
 
-use bbbext_bnnotify\subscription_utils;
+use bbbext_bnreminders\subscription_utils;
 use mod_bigbluebuttonbn\instance;
 use moodle_url;
 use renderable;
@@ -27,7 +27,7 @@ use templatable;
 /**
  * Get and set subscription status for a user or an email.
  *
- * @package   bbbext_bnnotify
+ * @package   bbbext_bnreminders
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -69,10 +69,10 @@ class subscriptions implements renderable, templatable {
                     // Unsubscription toggle.
                     $toggle = [
                         'id' => 'toggle-subscription-' . $module->id,
-                        'label' => $issubscribed ? get_string('subscribed', 'bbbext_bnnotify') :
-                            get_string('unsubscribed', 'bbbext_bnnotify'),
+                        'label' => $issubscribed ? get_string('subscribed', 'bbbext_bnreminders') :
+                            get_string('unsubscribed', 'bbbext_bnreminders'),
                         'checked' => $issubscribed,
-                        'url' => new \moodle_url('/mod/bigbluebuttonbn/extension/bnnotify/managesubscriptions.php'),
+                        'url' => new \moodle_url('/mod/bigbluebuttonbn/extension/bnreminders/managesubscriptions.php'),
                         'cmid' => $module->id,
                         'name' => 'state',
                         'value' => !$issubscribed,

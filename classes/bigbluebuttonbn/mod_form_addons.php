@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnnotify\bigbluebuttonbn;
+namespace bbbext_bnreminders\bigbluebuttonbn;
 
-use bbbext_bnnotify\utils;
+use bbbext_bnreminders\utils;
 use context;
 use html_writer;
 use mod_bigbluebuttonbn\instance;
@@ -27,7 +27,7 @@ use stdClass;
 /**
  * A class for the main mod form extension
  *
- * @package   bbbext_bnnotify
+ * @package   bbbext_bnreminders
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -52,7 +52,7 @@ class mod_form_addons extends \mod_bigbluebuttonbn\local\extension\mod_form_addo
         if (!empty($bigbluebuttonbndata->id)) {
             $data = $this->retrieve_additional_data($bigbluebuttonbndata->id);
             $this->bigbluebuttonbndata = (object) array_merge((array) $this->bigbluebuttonbndata, $data);
-            $this->bigbluebuttonbndata->bnnotify_paramcount = count($data["bnnotify_timespan"] ?? []);
+            $this->bigbluebuttonbndata->bnreminders_paramcount = count($data["bnreminders_timespan"] ?? []);
         }
     }
 
@@ -65,17 +65,17 @@ class mod_form_addons extends \mod_bigbluebuttonbn\local\extension\mod_form_addo
     private function retrieve_additional_data(int $id): array {
         global $DB;
         $data = [];
-        $bnnotifyrecords = $DB->get_records(mod_instance_helper::SUBPLUGIN_REMINDERS_TABLE, ['bigbluebuttonbnid' => $id]);
-        if ($bnnotifyrecords) {
-            $bnnotifyrecords = array_values($bnnotifyrecords);
-            foreach ($bnnotifyrecords as $bnnotifyrecord) {
-                $data["bnnotify_timespan"][] = $bnnotifyrecord->timespan ?? '';
+        $bnremindersrecords = $DB->get_records(mod_instance_helper::SUBPLUGIN_REMINDERS_TABLE, ['bigbluebuttonbnid' => $id]);
+        if ($bnremindersrecords) {
+            $bnremindersrecords = array_values($bnremindersrecords);
+            foreach ($bnremindersrecords as $bnremindersrecord) {
+                $data["bnreminders_timespan"][] = $bnremindersrecord->timespan ?? '';
             }
         }
-        $bnnotifyrecord = $DB->get_record(mod_instance_helper::SUBPLUGIN_TABLE, ['bigbluebuttonbnid' => $id]);
-        $data["bnnotify_reminderenabled"] = $bnnotifyrecord->reminderenabled ?? false;
-        $data["bnnotify_remindertoguestsenabled"] = $bnnotifyrecord->remindertoguestsenabled ?? false;
-        $data["bnnotify_id"] = $bnnotifyrecord->id ?? 0;
+        $bnremindersrecord = $DB->get_record(mod_instance_helper::SUBPLUGIN_TABLE, ['bigbluebuttonbnid' => $id]);
+        $data["bnreminders_reminderenabled"] = $bnremindersrecord->reminderenabled ?? false;
+        $data["bnreminders_remindertoguestsenabled"] = $bnremindersrecord->remindertoguestsenabled ?? false;
+        $data["bnreminders_id"] = $bnremindersrecord->id ?? 0;
         return $data;
     }
 
@@ -138,7 +138,7 @@ class mod_form_addons extends \mod_bigbluebuttonbn\local\extension\mod_form_addo
      * @param array|null $defaultvalues
      */
     public function data_preprocessing(?array &$defaultvalues): void {
-        // This is where we can add the data from the bnnotify table to the data provided.
+        // This is where we can add the data from the bnreminders table to the data provided.
         if (!empty($defaultvalues['id'])) {
             $data = $this->retrieve_additional_data(intval($defaultvalues['id']));
             $defaultvalues = array_merge($defaultvalues, $data);
@@ -178,22 +178,22 @@ class mod_form_addons extends \mod_bigbluebuttonbn\local\extension\mod_form_addo
      */
     public function definition_after_data() {
         // After data.
-        $isdeleting = optional_param_array('bnnotify_paramdelete', [], PARAM_RAW);
+        $isdeleting = optional_param_array('bnreminders_paramdelete', [], PARAM_RAW);
         // Get the index of the delete button that was pressed.
         if (!empty($isdeleting)) {
             $firstindex = array_key_first($isdeleting);
             // Then reassign values from the deleted group to the previous group.
-            $paramcount = optional_param('bnnotify_paramcount', 0, PARAM_INT);
+            $paramcount = optional_param('bnreminders_paramcount', 0, PARAM_INT);
             for ($index = $firstindex; $index < $paramcount; $index++) {
                 $nextindex = $index + 1;
-                if ($this->mform->elementExists("bnnotify_timespan[{$nextindex}]")) {
-                    $this->mform->getElement("bnnotify_timespan[$index]")
-                        ->setValue($this->mform->getElementValue("bnnotify_timespan[$nextindex]"));
+                if ($this->mform->elementExists("bnreminders_timespan[{$nextindex}]")) {
+                    $this->mform->getElement("bnreminders_timespan[$index]")
+                        ->setValue($this->mform->getElementValue("bnreminders_timespan[$nextindex]"));
                 }
             }
             $newparamcount = $paramcount - 1;
-            $this->mform->removeElement("bnnotify_paramgroup[{$newparamcount}]");
-            $this->mform->getElement('bnnotify_paramcount')->setValue($newparamcount);
+            $this->mform->removeElement("bnreminders_paramgroup[{$newparamcount}]");
+            $this->mform->getElement('bnreminders_paramcount')->setValue($newparamcount);
         }
     }
 
@@ -202,67 +202,67 @@ class mod_form_addons extends \mod_bigbluebuttonbn\local\extension\mod_form_addo
      */
     public function add_fields(): void {
         global $OUTPUT;
-        $this->mform->addElement('header', 'bnnotify', get_string('mod_form_bnnotify', 'bbbext_bnnotify'));
-        $this->mform->addElement('static', 'bnnotify_desc', '', get_string('mod_form_bnnotify_desc', 'bbbext_bnnotify'));
+        $this->mform->addElement('header', 'bnreminders', get_string('mod_form_bnreminders', 'bbbext_bnreminders'));
+        $this->mform->addElement('static', 'bnreminders_desc', '', get_string('mod_form_bnreminders_desc', 'bbbext_bnreminders'));
 
-        $this->mform->addHelpButton('bnnotify', 'bnnotify', 'bbbext_bnnotify');
-        $this->mform->addElement('advcheckbox', 'bnnotify_reminderenabled',
-            get_string('bnnotify:enabled', 'bbbext_bnnotify'));
-        $this->mform->disabledIf('bnnotify_reminderenabled', 'openingtime[enabled]', 'notchecked', 0);
-        $this->mform->setType('bnnotify_reminderenabled', PARAM_BOOL);
+        $this->mform->addHelpButton('bnreminders', 'bnreminders', 'bbbext_bnreminders');
+        $this->mform->addElement('advcheckbox', 'bnreminders_reminderenabled',
+            get_string('bnreminders:enabled', 'bbbext_bnreminders'));
+        $this->mform->disabledIf('bnreminders_reminderenabled', 'openingtime[enabled]', 'notchecked', 0);
+        $this->mform->setType('bnreminders_reminderenabled', PARAM_BOOL);
 
-        $this->mform->addElement('advcheckbox', 'bnnotify_remindertoguestsenabled',
-            get_string('bnnotify:guestenabled', 'bbbext_bnnotify'));
-        $this->mform->disabledIf('bnnotify_remindertoguestsenabled', 'guestallowed', 'notchecked', 0);
-        $this->mform->disabledIf('bnnotify_remindertoguestsenabled', 'openingtime[enabled]', 'notchecked', 0);
-        $this->mform->hideIf('bnnotify_remindertoguestsenabled', 'bnnotify_reminderenabled', 'notchecked', 0);
-        $this->mform->setType('bnnotify_remindertoguestsenabled', PARAM_BOOL);
+        $this->mform->addElement('advcheckbox', 'bnreminders_remindertoguestsenabled',
+            get_string('bnreminders:guestenabled', 'bbbext_bnreminders'));
+        $this->mform->disabledIf('bnreminders_remindertoguestsenabled', 'guestallowed', 'notchecked', 0);
+        $this->mform->disabledIf('bnreminders_remindertoguestsenabled', 'openingtime[enabled]', 'notchecked', 0);
+        $this->mform->hideIf('bnreminders_remindertoguestsenabled', 'bnreminders_reminderenabled', 'notchecked', 0);
+        $this->mform->setType('bnreminders_remindertoguestsenabled', PARAM_BOOL);
 
-        $paramcount = optional_param('bnnotify_paramcount',
-            $this->bigbluebuttonbndata->bnnotify_paramcount ?? 0, PARAM_RAW);
-        $paramcount += optional_param('bnnotify_addparamgroup', 0, PARAM_RAW) ? 1 : 0;
-        $isdeleting = optional_param_array('bnnotify_paramdelete', [], PARAM_RAW);
+        $paramcount = optional_param('bnreminders_paramcount',
+            $this->bigbluebuttonbndata->bnreminders_paramcount ?? 0, PARAM_RAW);
+        $paramcount += optional_param('bnreminders_addparamgroup', 0, PARAM_RAW) ? 1 : 0;
+        $isdeleting = optional_param_array('bnreminders_paramdelete', [], PARAM_RAW);
         foreach ($isdeleting as $index => $value) {
             // This prevents the last delete button from submitting the form.
-            $this->mform->registerNoSubmitButton("bnnotify_paramdelete[$index]");
+            $this->mform->registerNoSubmitButton("bnreminders_paramdelete[$index]");
         }
-        $bellicon = new pix_icon('i/bell', get_string('timespan:bell', 'bbbext_bnnotify'), 'bbbext_bnnotify');
+        $bellicon = new pix_icon('i/bell', get_string('timespan:bell', 'bbbext_bnreminders'), 'bbbext_bnreminders');
         for ($index = 0; $index < $paramcount; $index++) {
             $paramicon = $this->mform->createElement('html', $OUTPUT->render($bellicon));
             $paramname =
                 $this->mform->createElement(
-                    'select', "bnnotify_timespan[$index]",
-                    get_string('timespan', 'bbbext_bnnotify'),
+                    'select', "bnreminders_timespan[$index]",
+                    get_string('timespan', 'bbbext_bnreminders'),
                     utils::get_timespan_options()
                 );
             $paramtext = $this->mform->createElement(
-                'html', html_writer::span(get_string('reminder:message', 'bbbext_bnnotify'), 'mx-3'));
-            $paramdelete = $this->mform->createElement('submit', "bnnotify_paramdelete[$index]",
+                'html', html_writer::span(get_string('reminder:message', 'bbbext_bnreminders'), 'mx-3'));
+            $paramdelete = $this->mform->createElement('submit', "bnreminders_paramdelete[$index]",
                 get_string('delete'), [], false, ['customclassoverride' => 'btn btn-secondary float-left']);
 
             $this->mform->addGroup([$paramicon, $paramname, $paramtext, $paramdelete],
-                "bnnotify_paramgroup[$index]", '', [' '], false);
-            $this->mform->hideIf("bnnotify_paramgroup[$index]", 'bnnotify_reminderenabled', 'notchecked', 0);
-            $this->mform->disabledIf("bnnotify_paramgroup[$index]", 'openingtime[enabled]', 'notchecked', 0);
-            $this->mform->setType("bnnotify_timespan[$index]", PARAM_ALPHANUM);
-            $this->mform->setType("bnnotify_paramdelete[$index]", PARAM_RAW);
-            $this->mform->disabledIf("bnnotify_timespan[$index]", 'openingtime[enabled]');
-            $this->mform->registerNoSubmitButton("bnnotify_paramdelete[$index]");
+                "bnreminders_paramgroup[$index]", '', [' '], false);
+            $this->mform->hideIf("bnreminders_paramgroup[$index]", 'bnreminders_reminderenabled', 'notchecked', 0);
+            $this->mform->disabledIf("bnreminders_paramgroup[$index]", 'openingtime[enabled]', 'notchecked', 0);
+            $this->mform->setType("bnreminders_timespan[$index]", PARAM_ALPHANUM);
+            $this->mform->setType("bnreminders_paramdelete[$index]", PARAM_RAW);
+            $this->mform->disabledIf("bnreminders_timespan[$index]", 'openingtime[enabled]');
+            $this->mform->registerNoSubmitButton("bnreminders_paramdelete[$index]");
         }
         // Add a button to add new param groups.
-        $this->mform->addElement('submit', 'bnnotify_addparamgroup', get_string('addreminder', 'bbbext_bnnotify'));
-        $this->mform->hideIf('bnnotify_addparamgroup', 'bnnotify_reminderenabled');
-        $this->mform->disabledIf('bnnotify_addparamgroup', 'openingtime[enabled]', 'notchecked', 0);
-        $this->mform->setType('bnnotify_addparamgroup', PARAM_TEXT);
-        $this->mform->registerNoSubmitButton('bnnotify_addparamgroup');
-        $this->mform->addElement('hidden', 'bnnotify_paramcount');
-        $this->mform->setType('bnnotify_paramcount', PARAM_INT);
-        $this->mform->setConstants(['bnnotify_paramcount' => $paramcount]);
+        $this->mform->addElement('submit', 'bnreminders_addparamgroup', get_string('addreminder', 'bbbext_bnreminders'));
+        $this->mform->hideIf('bnreminders_addparamgroup', 'bnreminders_reminderenabled');
+        $this->mform->disabledIf('bnreminders_addparamgroup', 'openingtime[enabled]', 'notchecked', 0);
+        $this->mform->setType('bnreminders_addparamgroup', PARAM_TEXT);
+        $this->mform->registerNoSubmitButton('bnreminders_addparamgroup');
+        $this->mform->addElement('hidden', 'bnreminders_paramcount');
+        $this->mform->setType('bnreminders_paramcount', PARAM_INT);
+        $this->mform->setConstants(['bnreminders_paramcount' => $paramcount]);
 
         // Add the original or default openingtime to validate if it changes between updates.
-        $this->mform->addElement('hidden', 'bnnotify_openingtime');
-        $this->mform->setType('bnnotify_openingtime', PARAM_INT);
-        $this->mform->setConstants(['bnnotify_openingtime' => $this->bigbluebuttonbndata->openingtime ?? 0]);
+        $this->mform->addElement('hidden', 'bnreminders_openingtime');
+        $this->mform->setType('bnreminders_openingtime', PARAM_INT);
+        $this->mform->setConstants(['bnreminders_openingtime' => $this->bigbluebuttonbndata->openingtime ?? 0]);
     }
 
     /**
@@ -274,15 +274,15 @@ class mod_form_addons extends \mod_bigbluebuttonbn\local\extension\mod_form_addo
      */
     public function validation(array $data, array $files): array {
         $errors = [];
-        if (!empty($data['bnnotify_timespan'])) {
+        if (!empty($data['bnreminders_timespan'])) {
             // Check if we have duplicate values in array.
-            $unique = array_unique($data['bnnotify_timespan']);
-            if (count($unique) !== count($data['bnnotify_timespan'])) {
+            $unique = array_unique($data['bnreminders_timespan']);
+            if (count($unique) !== count($data['bnreminders_timespan'])) {
                 // Find the second occurence of the duplicate value.
-                $duplicates = array_diff_assoc($data['bnnotify_timespan'], $unique);
+                $duplicates = array_diff_assoc($data['bnreminders_timespan'], $unique);
                 if (!empty($duplicates)) {
                     $firstduplicatekey = array_key_first($duplicates);
-                    $errors["bnnotify_addparamgroup"] = get_string('error:duplicate', 'bbbext_bnnotify');
+                    $errors["bnreminders_addparamgroup"] = get_string('error:duplicate', 'bbbext_bnreminders');
                 }
             }
         }

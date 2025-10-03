@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnnotify;
+namespace bbbext_bnreminders;
 
-use bbbext_bnnotify\local\persistent\guest_email;
+use bbbext_bnreminders\local\persistent\guest_email;
 use core_user;
 use moodle_url;
 use mod_bigbluebuttonbn\instance;
@@ -24,7 +24,7 @@ use mod_bigbluebuttonbn\instance;
 /**
  * Utility class for email subscription related operations.
  *
- * @package   bbbext_bnnotify
+ * @package   bbbext_bnreminders
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -41,13 +41,13 @@ class subscription_utils {
     public static function change_reminder_subcription_user(bool $status, int $userid, instance $instance): void {
         $user = core_user::get_user($userid);
         if ($user) {
-            $userprefs = get_user_preferences('bbbext_bnnotify', '', $userid);
+            $userprefs = get_user_preferences('bbbext_bnreminders', '', $userid);
             $userprefs = json_decode($userprefs, true);
             if (empty($userprefs)) {
                 $userprefs = [];
             }
             $userprefs[$instance->get_instance_id()] = $status;
-            set_user_preference('bbbext_bnnotify', json_encode($userprefs), $user->id);
+            set_user_preference('bbbext_bnreminders', json_encode($userprefs), $user->id);
         }
     }
 
@@ -97,7 +97,7 @@ class subscription_utils {
      * @return bool true is enable, false is disabled (true is set by default)
      */
     public static function is_user_subscribed(int $userid, instance $instance): bool {
-        $userprefs = get_user_preferences('bbbext_bnnotify', '', $userid);
+        $userprefs = get_user_preferences('bbbext_bnreminders', '', $userid);
         if (!empty($userprefs)) {
             $userprefs = json_decode($userprefs, true);
             $instanceid = $instance->get_instance_id();
@@ -120,6 +120,6 @@ class subscription_utils {
     public static function get_unsubscribe_url(?int $cmid, ?string $email = null, ?int $userid = null): moodle_url {
         $params = ['email' => $email, 'userid' => $userid, 'cmid' => $cmid];
         $params = array_filter($params, fn($value) => !is_null($value));
-        return new moodle_url('/mod/bigbluebuttonbn/extension/bnnotify/subscription.php', $params);
+        return new moodle_url('/mod/bigbluebuttonbn/extension/bnreminders/subscription.php', $params);
     }
 }

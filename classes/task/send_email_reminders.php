@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnnotify\task;
+namespace bbbext_bnreminders\task;
 
-use bbbext_bnnotify\subscription_utils;
-use bbbext_bnnotify\utils;
+use bbbext_bnreminders\subscription_utils;
+use bbbext_bnreminders\utils;
 use core\task\adhoc_task;
 use core_user;
 use mod_bigbluebuttonbn\instance;
@@ -25,7 +25,7 @@ use mod_bigbluebuttonbn\instance;
 /**
  * This adhoc task will send emails to guest users with the meeting's details
  *
- * @package   bbbext_bnnotify
+ * @package   bbbext_bnreminders
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -54,7 +54,7 @@ class send_email_reminders extends adhoc_task {
             $user->mailformat = FORMAT_HTML; // HTML format.
             $unsubscribeurl = subscription_utils::get_unsubscribe_url($cmid, $email);
             $fullmessage = $emailhtmlmessage . '<br><br>'
-                . get_string('email_unsubscribe_message', 'bbbext_bnnotify', [
+                . get_string('emailunsubscribemessage', 'bbbext_bnreminders', [
                         'unsubscribeurl' => $unsubscribeurl->out(false),
                     ]
                 );

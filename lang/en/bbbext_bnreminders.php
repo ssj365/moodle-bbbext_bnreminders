@@ -17,7 +17,7 @@
 /**
  * Language File.
  *
- * @package   bbbext_bnnotify
+ * @package   bbbext_bnreminders
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -25,22 +25,19 @@
 
 defined('MOODLE_INTERNAL') || die();
 $string['addreminder'] = 'Add reminder';
-$string['bnnotify'] = 'Send email reminders before the session starts';
-$string['bnnotify:enabled'] = 'Send email reminders before session';
-$string['bnnotify:guestenabled'] = 'Add guests to the list of users to send the reminder to';
-$string['bnnotify:preferences'] = 'BigBlueButton reminders preferences';
-$string['bnnotify_help'] = 'If enabled and a start date is set, send email reminders for users registered to the activity';
+$string['bnreminders'] = 'Send email reminders before the session starts';
+$string['bnreminders:enabled'] = 'Send email reminders before session';
+$string['bnreminders:guestenabled'] = 'Add guests to the list of users to send the reminder to';
+$string['bnreminders:preferences'] = 'BigBlueButton reminders preferences';
+$string['bnreminders_help'] = 'If enabled and a start date is set, send email reminders for users registered to the activity';
 $string['check_emails_reminder'] = 'Check emails reminder';
 $string['emailcontent'] = 'Email Customization';
 $string['emailcontent:desc'] = 'These settings will customize the message sent to users.';
 $string['emailfooter'] = 'Footer information';
 $string['emailfooter:desc'] = 'Add extra information such as institution location and contact details as a footer to emails.';
 $string['emailsubject'] = 'Email Subject';
-$string['emailsubject:desc'] = 'The subject of the email.';
 $string['emailsubject:default'] = 'Reminder for the meeting {$name}';
-$string['email_unsubscribe_message'] = '<span>
-You can unsubscribe to this reminder by clicking on the following <a href="{$a->unsubscribeurl}">Unsubscribe link</a>.
-</span>';
+$string['emailsubject:desc'] = 'The subject of the email.';
 $string['emailtemplate'] = 'Email template';
 $string['emailtemplate:default'] = '<p>
 Hi,<br><br>
@@ -52,11 +49,14 @@ $string['emailtemplate:desc'] = 'Email template when sending reminders.The follo
     <li>{$date}: the meeting date and time</li>
     <li>{$name}: the meeting name</li>
 </ul>';
+$string['emailunsubscribemessage'] = '<span>
+You can unsubscribe to this reminder by clicking on the following <a href="{$a->unsubscribeurl}">Unsubscribe link</a>.
+</span>';
 $string['error:duplicate'] = 'You have already one reminder for this meeting for the same time span';
 $string['messageprovider:reminder'] = 'BigBlueButton email reminder';
-$string['mod_form_bnnotify'] = 'Email notifications';
-$string['mod_form_bnnotify_desc'] = 'Send reminders to students as notifications.';
-$string['pluginname'] = 'BigBlueButton BN Notify';
+$string['mod_form_bnreminders'] = 'Email notifications';
+$string['mod_form_bnreminders_desc'] = 'Send reminders to students as notifications.';
+$string['pluginname'] = 'BigBlueButton BN Reminders';
 $string['privacy:metadata'] = 'This extension does not store any personal data.';
 $string['reminder'] = 'Reminder';
 $string['reminder:message'] = 'before meeting starts';

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace bbbext_bnnotify\form;
+namespace bbbext_bnreminders\form;
 defined('MOODLE_INTERNAL') || die;
 global $CFG;
 require_once($CFG->libdir . '/formslib.php');
@@ -22,7 +22,7 @@ require_once($CFG->libdir . '/formslib.php');
 /**
  * Guest login form.
  *
- * @package   bbbext_bnnotify
+ * @package   bbbext_bnreminders
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -43,10 +43,10 @@ class unsubscribe extends \moodleform {
         $mform->setType('cmid', PARAM_INT);
 
         $unsubscribearray = [];
-        $unsubscribearray[] = $mform->createElement('submit', 'unsubscribe', get_string('unsubscribe', 'bbbext_bnnotify'));
+        $unsubscribearray[] = $mform->createElement('submit', 'unsubscribe', get_string('unsubscribe', 'bbbext_bnreminders'));
         $unsubscribearray[] = $mform->createElement('cancel');
         $mform->addGroup($unsubscribearray, 'unsubscribearray',
-            get_string('unsubscribe:label', 'bbbext_bnnotify'),
+            get_string('unsubscribe:label', 'bbbext_bnreminders'),
             [' '],
             false
         );

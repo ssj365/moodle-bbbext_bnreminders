@@ -17,7 +17,7 @@
 /**
  * This file defines the admin settings for this plugin
  *
- * @package   bbbext_bnnotify
+ * @package   bbbext_bnreminders
  * @copyright 2024 onwards, Blindside Networks Inc
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Laurent David (laurent@call-learning.fr)
@@ -26,32 +26,32 @@ defined('MOODLE_INTERNAL') || die();
 
 // Content settings.
 $settings->add(new admin_setting_heading(
-    'bbbext_bnnotify/emailcontent',
-    get_string('emailcontent', 'bbbext_bnnotify'),
-    get_string('emailcontent:desc', 'bbbext_bnnotify')
+    'bbbext_bnreminders/emailcontent',
+    get_string('emailcontent', 'bbbext_bnreminders'),
+    get_string('emailcontent:desc', 'bbbext_bnreminders')
 ));
 // Text field setting.
 $textfield = new admin_setting_configtext(
-    'bbbext_bnnotify/emailsubject',
-    new lang_string('emailsubject', 'bbbext_bnnotify'),
-    new lang_string('emailsubject:desc', 'bbbext_bnnotify'),
-    new lang_string('emailsubject:default', 'bbbext_bnnotify'),
+    'bbbext_bnreminders/emailsubject',
+    new lang_string('emailsubject', 'bbbext_bnreminders'),
+    new lang_string('emailsubject:desc', 'bbbext_bnreminders'),
+    new lang_string('emailsubject:default', 'bbbext_bnreminders'),
     PARAM_RAW,
     50
 );
 $settings->add($textfield);
 // Text area with editor for the email template.
-$emailtemplateeditor = new admin_setting_confightmleditor('bbbext_bnnotify/emailtemplate',
-    new lang_string('emailtemplate', 'bbbext_bnnotify'),
-    new lang_string('emailtemplate:desc', 'bbbext_bnnotify'),
-    new lang_string('emailtemplate:default', 'bbbext_bnnotify'),
+$emailtemplateeditor = new admin_setting_confightmleditor('bbbext_bnreminders/emailtemplate',
+    new lang_string('emailtemplate', 'bbbext_bnreminders'),
+    new lang_string('emailtemplate:desc', 'bbbext_bnreminders'),
+    new lang_string('emailtemplate:default', 'bbbext_bnreminders'),
     PARAM_RAW
 );
 $settings->add($emailtemplateeditor);
 // Text area with editor for additional footer information.
-$emailfootereditor = new admin_setting_confightmleditor('bbbext_bnnotify/emailfooter',
-    new lang_string('emailfooter', 'bbbext_bnnotify'),
-    new lang_string('emailfooter:desc', 'bbbext_bnnotify'),
+$emailfootereditor = new admin_setting_confightmleditor('bbbext_bnreminders/emailfooter',
+    new lang_string('emailfooter', 'bbbext_bnreminders'),
+    new lang_string('emailfooter:desc', 'bbbext_bnreminders'),
     '',
     PARAM_RAW,
     '0',
