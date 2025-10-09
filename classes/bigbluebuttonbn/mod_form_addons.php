@@ -33,7 +33,6 @@ use stdClass;
  * @author    Laurent David (laurent@call-learning.fr)
  */
 class mod_form_addons extends \mod_bigbluebuttonbn\local\extension\mod_form_addons {
-
     /**
      * Max File size for the editor.
      */
@@ -218,36 +217,89 @@ class mod_form_addons extends \mod_bigbluebuttonbn\local\extension\mod_form_addo
         $this->mform->hideIf('bnreminders_remindertoguestsenabled', 'bnreminders_reminderenabled', 'notchecked', 0);
         $this->mform->setType('bnreminders_remindertoguestsenabled', PARAM_BOOL);
 
-        $paramcount = optional_param('bnreminders_paramcount',
-            $this->bigbluebuttonbndata->bnreminders_paramcount ?? 0, PARAM_RAW);
-        $paramcount += optional_param('bnreminders_addparamgroup', 0, PARAM_RAW) ? 1 : 0;
-        $isdeleting = optional_param_array('bnreminders_paramdelete', [], PARAM_RAW);
+        $paramcount = optional_param(
+            'bnreminders_paramcount',
+            $this->bigbluebuttonbndata->bnreminders_paramcount ?? 0,
+            PARAM_RAW
+        );
+        $paramcount += optional_param(
+            'bnreminders_addparamgroup',
+            0,
+            PARAM_RAW
+        ) ? 1 : 0;
+        $isdeleting = optional_param_array(
+            'bnreminders_paramdelete',
+            [],
+            PARAM_RAW
+        );
         foreach ($isdeleting as $index => $value) {
             // This prevents the last delete button from submitting the form.
             $this->mform->registerNoSubmitButton("bnreminders_paramdelete[$index]");
         }
         $bellicon = new pix_icon('i/bell', get_string('timespan:bell', 'bbbext_bnreminders'), 'bbbext_bnreminders');
         for ($index = 0; $index < $paramcount; $index++) {
-            $paramicon = $this->mform->createElement('html', $OUTPUT->render($bellicon));
-            $paramname =
-                $this->mform->createElement(
-                    'select', "bnreminders_timespan[$index]",
-                    get_string('timespan', 'bbbext_bnreminders'),
-                    utils::get_timespan_options()
-                );
+            $paramicon = $this->mform->createElement(
+                'html',
+                $OUTPUT->render($bellicon)
+            );
+            $paramname = $this->mform->createElement(
+                'select',
+                "bnreminders_timespan[$index]",
+                get_string('timespan', 'bbbext_bnreminders'),
+                utils::get_timespan_options()
+            );
             $paramtext = $this->mform->createElement(
-                'html', html_writer::span(get_string('reminder:message', 'bbbext_bnreminders'), 'mx-3'));
-            $paramdelete = $this->mform->createElement('submit', "bnreminders_paramdelete[$index]",
-                get_string('delete'), [], false, ['customclassoverride' => 'btn btn-secondary float-left']);
+                'html',
+                html_writer::span(get_string('reminder:message', 'bbbext_bnreminders'), 'mx-3')
+            );
+            $paramdelete = $this->mform->createElement(
+                'submit',
+                "bnreminders_paramdelete[$index]",
+                get_string('delete'),
+                [],
+                false,
+                ['customclassoverride' => 'btn btn-secondary float-left']
+            );
 
-            $this->mform->addGroup([$paramicon, $paramname, $paramtext, $paramdelete],
-                "bnreminders_paramgroup[$index]", '', [' '], false);
-            $this->mform->hideIf("bnreminders_paramgroup[$index]", 'bnreminders_reminderenabled', 'notchecked', 0);
-            $this->mform->disabledIf("bnreminders_paramgroup[$index]", 'openingtime[enabled]', 'notchecked', 0);
-            $this->mform->setType("bnreminders_timespan[$index]", PARAM_ALPHANUM);
-            $this->mform->setType("bnreminders_paramdelete[$index]", PARAM_RAW);
-            $this->mform->disabledIf("bnreminders_timespan[$index]", 'openingtime[enabled]');
-            $this->mform->registerNoSubmitButton("bnreminders_paramdelete[$index]");
+            $this->mform->addGroup(
+                [
+                    $paramicon,
+                    $paramname,
+                    $paramtext,
+                    $paramdelete,
+                ],
+                "bnreminders_paramgroup[$index]",
+                '',
+                [' '],
+                false
+            );
+            $this->mform->hideIf(
+                "bnreminders_paramgroup[$index]",
+                'bnreminders_reminderenabled',
+                'notchecked',
+                0
+            );
+            $this->mform->disabledIf(
+                "bnreminders_paramgroup[$index]",
+                'openingtime[enabled]',
+                'notchecked',
+                0
+            );
+            $this->mform->setType(
+                "bnreminders_timespan[$index]",
+                PARAM_ALPHANUM
+            );
+            $this->mform->setType(
+                "bnreminders_paramdelete[$index]",
+                PARAM_RAW
+            );
+            $this->mform->disabledIf(
+                "bnreminders_timespan[$index]",
+                'openingtime[enabled]'
+            );
+            $this->mform->registerNoSubmitButton(
+                "bnreminders_paramdelete[$index]"
+            );
         }
         // Add a button to add new param groups.
         $this->mform->addElement('submit', 'bnreminders_addparamgroup', get_string('addreminder', 'bbbext_bnreminders'));

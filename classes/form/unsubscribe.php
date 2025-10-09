@@ -28,7 +28,6 @@ require_once($CFG->libdir . '/formslib.php');
  * @author    Laurent David (laurent@call-learning.fr)
  */
 class unsubscribe extends \moodleform {
-
     /**
      * Form definition
      */
@@ -45,7 +44,9 @@ class unsubscribe extends \moodleform {
         $unsubscribearray = [];
         $unsubscribearray[] = $mform->createElement('submit', 'unsubscribe', get_string('unsubscribe', 'bbbext_bnreminders'));
         $unsubscribearray[] = $mform->createElement('cancel');
-        $mform->addGroup($unsubscribearray, 'unsubscribearray',
+        $mform->addGroup(
+            $unsubscribearray,
+            'unsubscribearray',
             get_string('unsubscribe:label', 'bbbext_bnreminders'),
             [' '],
             false

@@ -17,7 +17,6 @@
 namespace bbbext_bnreminders\task;
 
 use bbbext_bnreminders\subscription_utils;
-use bbbext_bnreminders\utils;
 use core\task\adhoc_task;
 use core_user;
 use moodle_url;
@@ -32,7 +31,6 @@ use mod_bigbluebuttonbn\instance;
  * @author    Laurent David (laurent@call-learning.fr)
  */
 class send_email_reminders_message extends adhoc_task {
-
     /**
      * Execute the task
      *
@@ -63,8 +61,10 @@ class send_email_reminders_message extends adhoc_task {
             $message->smallmessage = html_to_text($emailhtmlmessage);
             $message->notification = 1; // This message is just a notification from Moodle.
             $message->contexturl = (
-            new moodle_url('/mod/bigbluebuttonbn/view.php?id',
-                ['id' => $cmid])
+            new moodle_url(
+                '/mod/bigbluebuttonbn/view.php?id',
+                ['id' => $cmid]
+            )
             )->out(false); // A relevant URL for the notification.
             $message->contexturlname = $instance->get_meeting_name();
             // Extra content for specific processor.

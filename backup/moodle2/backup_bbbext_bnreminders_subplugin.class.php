@@ -23,7 +23,6 @@
  * @author    Laurent David (laurent@call-learning.fr)
  */
 class backup_bbbext_bnreminders_subplugin extends backup_subplugin {
-
     /**
      * Returns the subplugin information to attach the BigBlueButton instance.
      *
@@ -44,7 +43,9 @@ class backup_bbbext_bnreminders_subplugin extends backup_subplugin {
             null,
             ['timespan', 'lastsent']
         );
-        $subpluginelementguest = new backup_nested_element('bbbext_bnreminders_guests', ['id'],
+        $subpluginelementguest = new backup_nested_element(
+            'bbbext_bnreminders_guests',
+            ['id'],
             [
                 'bigbluebuttonbnid',
                 'email',
@@ -54,7 +55,8 @@ class backup_bbbext_bnreminders_subplugin extends backup_subplugin {
                 'usermodified',
                 'timemodified',
                 'timecreated',
-            ]);
+            ]
+        );
 
         // Connect XML elements into the tree.
         $subplugin->add_child($subpluginwrapper);
@@ -76,8 +78,10 @@ class backup_bbbext_bnreminders_subplugin extends backup_subplugin {
         $userinfo = $this->get_setting_value('userinfo');
         // This source definition only happen if we are including user info.
         if ($userinfo) {
-            $subpluginelementguest->set_source_table('bbbext_bnreminders_guests',
-                ['bigbluebuttonbnid' => backup::VAR_PARENTID]);
+            $subpluginelementguest->set_source_table(
+                'bbbext_bnreminders_guests',
+                ['bigbluebuttonbnid' => backup::VAR_PARENTID]
+            );
         }
         return $subplugin;
     }

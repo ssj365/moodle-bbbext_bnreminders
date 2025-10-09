@@ -87,7 +87,6 @@ class bbbext_bnreminders_generator extends \component_generator_base {
         }
     }
 
-
     /**
      * Add reminder for instance
      *
@@ -133,5 +132,4 @@ class bbbext_bnreminders_generator extends \component_generator_base {
         $guest->id = $DB->insert_record(mod_instance_helper::SUBPLUGIN_GUESTS_TABLE, $guest);
         return $guest;
     }
-
 }

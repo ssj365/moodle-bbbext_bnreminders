@@ -47,9 +47,11 @@ final class mod_instance_helper_test extends \advanced_testcase {
         $bbbgenerator = $this->getDataGenerator()->get_plugin_generator('mod_bigbluebuttonbn');
         $time = new DateTime("now", core_date::get_user_timezone_object());
         $time->add(new DateInterval("PT1H"));
-        $bbbinstance = instance::get_from_instanceid($bbbgenerator->create_instance([
-            'course' => $course,
-        ])->id);
+        $bbbinstance = instance::get_from_instanceid(
+            $bbbgenerator->create_instance([
+                'course' => $course,
+            ])->id
+        );
 
         $bnremindersgenerator = $this->getDataGenerator()->get_plugin_generator('bbbext_bnreminders');
         $bnremindersgenerator->enable_reminder($bbbinstance->get_instance_id());
@@ -76,12 +78,15 @@ final class mod_instance_helper_test extends \advanced_testcase {
         $synparametersref->invokeArgs($modinstancehelper, [$data]);
 
         // Three.
-        $existingreminders = $DB->get_records(mod_instance_helper::SUBPLUGIN_REMINDERS_TABLE,
+        $existingreminders = $DB->get_records(
+            mod_instance_helper::SUBPLUGIN_REMINDERS_TABLE,
             ['bigbluebuttonbnid' => $bbbinstance->get_instance_id()]
         );
         $this->assertCount(3, $existingreminders);
-        $this->assertEquals(['PT1H', 'PT2H', 'PT1D'],
-            array_values(array_map(fn($reminder) => $reminder->timespan, $existingreminders)));
+        $this->assertEquals(
+            ['PT1H', 'PT2H', 'PT1D'],
+            array_values(array_map(fn($reminder) => $reminder->timespan, $existingreminders))
+        );
 
         $data = $bbbinstance->get_instance_data();
         $data->bnreminders_paramcount = 2;
@@ -89,11 +94,14 @@ final class mod_instance_helper_test extends \advanced_testcase {
         $synparametersref->invokeArgs($modinstancehelper, [$data]);
 
         // Two disappeared and one added.
-        $existingreminders = $DB->get_records(mod_instance_helper::SUBPLUGIN_REMINDERS_TABLE,
+        $existingreminders = $DB->get_records(
+            mod_instance_helper::SUBPLUGIN_REMINDERS_TABLE,
             ['bigbluebuttonbnid' => $bbbinstance->get_instance_id()]
         );
         $this->assertCount(2, $existingreminders);
-        $this->assertEquals(['PT1H', 'PT2D'],
-            array_values(array_map(fn($reminder) => $reminder->timespan, $existingreminders)));
+        $this->assertEquals(
+            ['PT1H', 'PT2D'],
+            array_values(array_map(fn($reminder) => $reminder->timespan, $existingreminders))
+        );
     }
 }

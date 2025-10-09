@@ -62,26 +62,46 @@ class mod_instance_helper extends \mod_bigbluebuttonbn\local\extension\mod_insta
         $count = $bigbluebuttonbn->bnreminders_paramcount ?? 0;
         if (!empty($bigbluebuttonbn->bnreminders_timespan)) {
             $bigbluebuttonbn->bnreminders_timespan = clean_param_array(
-                $bigbluebuttonbn->bnreminders_timespan, PARAM_TEXT, true
+                $bigbluebuttonbn->bnreminders_timespan,
+                PARAM_TEXT,
+                true
             );
-            if (empty($bigbluebuttonbn->bnreminders_timespan) &&
-                (!(defined('PHPUNIT_TEST') && PHPUNIT_TEST) && !defined('BEHAT_SITE_RUNNING'))) {
+            if (
+                empty($bigbluebuttonbn->bnreminders_timespan)
+                && (
+                    !(defined('PHPUNIT_TEST') && PHPUNIT_TEST)
+                    && !defined('BEHAT_SITE_RUNNING')
+                )
+            ) {
                 debugging('bnreminders : The reminder contains invalid value.');
             }
         }
-        if (!isset($bigbluebuttonbn->bnreminders_reminderenabled) ||
-            clean_param(
-                $bigbluebuttonbn->bnreminders_reminderenabled, PARAM_BOOL) != $bigbluebuttonbn->bnreminders_reminderenabled
+        if (
+            !isset($bigbluebuttonbn->bnreminders_reminderenabled)
+            || clean_param(
+                $bigbluebuttonbn->bnreminders_reminderenabled,
+                PARAM_BOOL
+            ) != $bigbluebuttonbn->bnreminders_reminderenabled
+        ) {
+            if (
+                !(defined('PHPUNIT_TEST') && PHPUNIT_TEST)
+                && !defined('BEHAT_SITE_RUNNING')
             ) {
-            if (!(defined('PHPUNIT_TEST') && PHPUNIT_TEST) && !defined('BEHAT_SITE_RUNNING')) {
                 debugging('bnreminders : The enabled type contains invalid value.');
             }
             return;
         }
-        if (!isset($bigbluebuttonbn->bnreminders_remindertoguestsenabled) ||
-            clean_param($bigbluebuttonbn->bnreminders_remindertoguestsenabled, PARAM_BOOL) !=
-            $bigbluebuttonbn->bnreminders_remindertoguestsenabled) {
-            if (!(defined('PHPUNIT_TEST') && PHPUNIT_TEST) && !defined('BEHAT_SITE_RUNNING')) {
+        if (
+            !isset($bigbluebuttonbn->bnreminders_remindertoguestsenabled)
+            || clean_param(
+                $bigbluebuttonbn->bnreminders_remindertoguestsenabled,
+                PARAM_BOOL
+            ) != $bigbluebuttonbn->bnreminders_remindertoguestsenabled
+        ) {
+            if (
+                !(defined('PHPUNIT_TEST') && PHPUNIT_TEST)
+                && !defined('BEHAT_SITE_RUNNING')
+            ) {
                 debugging('bnreminders : The enabled type contains invalid value.');
             }
             return;
@@ -89,9 +109,17 @@ class mod_instance_helper extends \mod_bigbluebuttonbn\local\extension\mod_insta
         // First remove unwanted values.
         $rs = $DB->get_recordset(self::SUBPLUGIN_REMINDERS_TABLE, ['bigbluebuttonbnid' => $bigbluebuttonbn->id]);
         foreach ($rs as $existingreminder) {
-            if (empty($bigbluebuttonbn->bnreminders_timespan) ||
-                !in_array($existingreminder->timespan, $bigbluebuttonbn->bnreminders_timespan)) {
-                $DB->delete_records(self::SUBPLUGIN_REMINDERS_TABLE, ['id' => $existingreminder->id]);
+            if (
+                empty($bigbluebuttonbn->bnreminders_timespan)
+                || !in_array(
+                    $existingreminder->timespan,
+                    $bigbluebuttonbn->bnreminders_timespan
+                )
+            ) {
+                $DB->delete_records(
+                    self::SUBPLUGIN_REMINDERS_TABLE,
+                    ['id' => $existingreminder->id]
+                );
             }
         }
         $rs->close();
@@ -101,12 +129,18 @@ class mod_instance_helper extends \mod_bigbluebuttonbn\local\extension\mod_insta
             $queryfields['bigbluebuttonbnid'] = $bigbluebuttonbn->id;
 
             // Fetch a single record using get_record.
-            $rem = $DB->get_record(self::SUBPLUGIN_REMINDERS_TABLE, $queryfields);
+            $rem = $DB->get_record(
+                self::SUBPLUGIN_REMINDERS_TABLE,
+                $queryfields
+            );
 
             // Check if the recordset is empty.
             if (!$rem) {
                 // If no record exists, insert a new one.
-                $DB->insert_record(self::SUBPLUGIN_REMINDERS_TABLE, (object) $queryfields);
+                $DB->insert_record(
+                    self::SUBPLUGIN_REMINDERS_TABLE,
+                    (object) $queryfields
+                );
             } else {
                 // Check if openingtime has changed.
                 if ($bigbluebuttonbn->bnreminders_openingtime != $bigbluebuttonbn->openingtime) {
@@ -118,17 +152,27 @@ class mod_instance_helper extends \mod_bigbluebuttonbn\local\extension\mod_insta
                     $updatefields->lastsent = 0;
 
                     // Update the record in the database.
-                    $DB->update_record(self::SUBPLUGIN_REMINDERS_TABLE, $updatefields);
+                    $DB->update_record(
+                        self::SUBPLUGIN_REMINDERS_TABLE,
+                        $updatefields
+                    );
                 }
             }
         }
-        $existingrecord = $DB->get_record(self::SUBPLUGIN_TABLE, ['bigbluebuttonbnid' => $bigbluebuttonbn->id]);
+        $existingrecord = $DB->get_record(
+            self::SUBPLUGIN_TABLE,
+            ['bigbluebuttonbnid' => $bigbluebuttonbn->id]
+        );
         if ($existingrecord) {
             $existingrecord->reminderenabled = $bigbluebuttonbn->bnreminders_reminderenabled ?? false;
-            $existingrecord->remindertoguestsenabled = $bigbluebuttonbn->bnreminders_remindertoguestsenabled ?? false;;
-            $DB->update_record(self::SUBPLUGIN_TABLE, $existingrecord);
+            $existingrecord->remindertoguestsenabled = $bigbluebuttonbn->bnreminders_remindertoguestsenabled ?? false;
+            $DB->update_record(
+                self::SUBPLUGIN_TABLE,
+                $existingrecord
+            );
         } else {
-            $DB->insert_record(self::SUBPLUGIN_TABLE,
+            $DB->insert_record(
+                self::SUBPLUGIN_TABLE,
                 [
                     'bigbluebuttonbnid' => $bigbluebuttonbn->id,
                     'reminderenabled' => $bigbluebuttonbn->bnreminders_reminderenabled ?? false,

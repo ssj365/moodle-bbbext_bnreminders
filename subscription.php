@@ -96,7 +96,8 @@ if ($form->is_cancelled()) {
         }
         notification::add(
             get_string('unsubscribed', 'bbbext_bnreminders'),
-            \core\output\notification::NOTIFY_INFO);
+            \core\output\notification::NOTIFY_INFO
+        );
     } catch (server_not_available_exception $e) {
         bigbluebutton_proxy::handle_server_not_available($instance);
     }

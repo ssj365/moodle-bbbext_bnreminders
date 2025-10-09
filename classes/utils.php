@@ -25,7 +25,6 @@ namespace bbbext_bnreminders;
  * @author    Laurent David (laurent@call-learning.fr)
  */
 class utils {
-
     // ISO 8601 duration format.
     /**
      * One hour.
@@ -70,12 +69,13 @@ class utils {
      * @throws \coding_exception
      */
     public static function get_timespan_options(): array {
-        return
-            array_combine(self::TIMESPAN_OPTIONS,
-                array_map(
-                    fn($optionname) => get_string('timespan:' . strtolower($optionname), 'bbbext_bnreminders'),
-                    self::TIMESPAN_OPTIONS
-                ));
+        return array_combine(
+            self::TIMESPAN_OPTIONS,
+            array_map(
+                fn($optionname) => get_string('timespan:' . strtolower($optionname), 'bbbext_bnreminders'),
+                self::TIMESPAN_OPTIONS
+            )
+        );
     }
 
     /**

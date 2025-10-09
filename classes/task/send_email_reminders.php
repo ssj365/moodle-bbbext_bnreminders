@@ -17,7 +17,6 @@
 namespace bbbext_bnreminders\task;
 
 use bbbext_bnreminders\subscription_utils;
-use bbbext_bnreminders\utils;
 use core\task\adhoc_task;
 use core_user;
 use mod_bigbluebuttonbn\instance;
@@ -31,7 +30,6 @@ use mod_bigbluebuttonbn\instance;
  * @author    Laurent David (laurent@call-learning.fr)
  */
 class send_email_reminders extends adhoc_task {
-
     /**
      * Execute the task
      *
@@ -54,7 +52,10 @@ class send_email_reminders extends adhoc_task {
             $user->mailformat = FORMAT_HTML; // HTML format.
             $unsubscribeurl = subscription_utils::get_unsubscribe_url($cmid, $email);
             $fullmessage = $emailhtmlmessage . '<br><br>'
-                . get_string('emailunsubscribemessage', 'bbbext_bnreminders', [
+                . get_string(
+                    'emailunsubscribemessage',
+                    'bbbext_bnreminders',
+                    [
                         'unsubscribeurl' => $unsubscribeurl->out(false),
                     ]
                 );

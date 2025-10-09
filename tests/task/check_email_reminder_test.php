@@ -33,7 +33,6 @@ use mod_bigbluebuttonbn\instance;
  * @coversDefaultClass  \bbbext_bnreminders\task\check_emails_reminder
  */
 final class check_email_reminder_test extends \advanced_testcase {
-
     /**
      * @var instance|null
      */

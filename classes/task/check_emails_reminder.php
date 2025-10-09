@@ -21,7 +21,6 @@ use bbbext_bnreminders\local\persistent\guest_email;
 use bbbext_bnreminders\subscription_utils;
 use bbbext_bnreminders\utils;
 use core\task\scheduled_task;
-use context_system;
 use moodle_url;
 use DateInterval;
 use DateTime;
@@ -66,8 +65,10 @@ class check_emails_reminder extends scheduled_task {
             if (empty($instance->get_instance_var('openingtime'))) {
                 continue;
             }
-            $allreminders = $DB->get_recordset(mod_instance_helper::SUBPLUGIN_REMINDERS_TABLE,
-                ['bigbluebuttonbnid' => $instancereminder->bigbluebuttonbnid]);
+            $allreminders = $DB->get_recordset(
+                mod_instance_helper::SUBPLUGIN_REMINDERS_TABLE,
+                ['bigbluebuttonbnid' => $instancereminder->bigbluebuttonbnid]
+            );
 
             $emailsubject = $this->get_subject($instance);
             $emailhtmlmessage = $this->get_html_message($instance);
@@ -107,7 +108,8 @@ class check_emails_reminder extends scheduled_task {
                                 'subject' => $emailsubject,
                                 'htmlmessage' => $emailhtmlmessage,
                                 'emailfooter' => $emailfooter,
-                            ]);
+                            ]
+                        );
                         \core\task\manager::queue_adhoc_task($emailreminder);
                     }
                     if (!empty($instancereminder->remindertoguestsenabled)) {
@@ -134,7 +136,8 @@ class check_emails_reminder extends scheduled_task {
                                     'subject' => $emailsubject,
                                     'htmlmessage' => $emailhtmlmessage,
                                     'emailfooter' => $emailfooter,
-                                ]);
+                                ]
+                            );
                             \core\task\manager::queue_adhoc_task($emailreminder);
                         }
                     }
@@ -151,7 +154,10 @@ class check_emails_reminder extends scheduled_task {
      * @return string
      */
     protected function get_subject(instance $instance): string {
-        $htmlsubject = $this->get_email_content('emailsubject', $instance);
+        $htmlsubject = $this->get_email_content(
+            'emailsubject',
+            $instance
+        );
         return $htmlsubject;
     }
 
@@ -166,8 +172,12 @@ class check_emails_reminder extends scheduled_task {
             'course_fullname' => $instance->get_course()->fullname,
             'course_shortname' => $instance->get_course()->shortname,
             'name' => $instance->get_cm()->name,
-            'url' => (new \moodle_url('/mod/bigbluebuttonbn/view.php',
-                ['id' => $instance->get_cm_id()]))->out(false),
+            'url' => (
+                new \moodle_url(
+                    '/mod/bigbluebuttonbn/view.php',
+                    ['id' => $instance->get_cm_id()]
+                )
+            )->out(false),
             'date' => userdate($instance->get_instance_var('openingtime')),
         ];
     }
@@ -179,7 +189,10 @@ class check_emails_reminder extends scheduled_task {
      * @return string
      */
     protected function get_html_message(instance $instance): string {
-        $htmlmessage = $this->get_email_content('emailtemplate', $instance);
+        $htmlmessage = $this->get_email_content(
+            'emailtemplate',
+            $instance
+        );
         return $htmlmessage;
     }
 
@@ -190,7 +203,10 @@ class check_emails_reminder extends scheduled_task {
      * @return string
      */
     protected function get_footer(instance $instance): string {
-        $htmlfooter = $this->get_email_content('emailfooter', $instance);
+        $htmlfooter = $this->get_email_content(
+            'emailfooter',
+            $instance
+        );
         if (!empty($htmlfooter)) {
             $htmlfooter = '<br>' . $htmlfooter;
         }
@@ -206,7 +222,10 @@ class check_emails_reminder extends scheduled_task {
     protected function get_email_content(string $config, instance $instance): string {
         $text = get_config('bbbext_bnreminders', $config);
         $vars = $this->get_string_vars($instance);
-        $emailcontent = utils::replace_vars_in_text($vars, $text);
+        $emailcontent = utils::replace_vars_in_text(
+            $vars,
+            $text
+        );
         return $emailcontent;
     }
 

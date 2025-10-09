@@ -17,9 +17,9 @@
 /**
  * Plugin overrides are located here
  *
- * @package     bbbext_bnreminders
- * @copyright   2024 Laurent David - CALL Learning <laurent@call-learning.fr>
- * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   bbbext_bnreminders
+ * @copyright 2024 Laurent David - CALL Learning <laurent@call-learning.fr>
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 use bbbext_bnreminders\local\persistent\guest_email;
@@ -49,13 +49,15 @@ function bbbext_bnreminders_get_fontawesome_icon_map() {
  * @param array $options additional options affecting the file serving
  * @return bool false if file not found, does not return if found - just send the file
  */
-function bbbext_bnreminders_pluginfile($course,
+function bbbext_bnreminders_pluginfile(
+    $course,
     $cm,
     context $context,
     $filearea,
     $args,
     $forcedownload,
-    array $options = []) {
+    array $options = []
+) {
 
     if ($context->contextlevel != CONTEXT_MODULE) {
         return false;
@@ -105,7 +107,8 @@ function bbbext_bnreminders_extend_navigation_user_settings(
     stdClass $user,
     context_user $context,
     stdClass $course,
-    context_course $coursecontext) {
+    context_course $coursecontext
+) {
     $enabled = \core_plugin_manager::instance()->get_plugin_info('bbbext_bnreminders')->is_enabled();
     if (!$enabled) {
         return;
