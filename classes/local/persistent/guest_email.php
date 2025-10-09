@@ -45,7 +45,7 @@ class guest_email extends persistent {
         global $USER;
         $instance = instance::get_from_instanceid($bigbluebuttonid);
         if (!$instance) {
-            throw new \moodle_exception('invalidinstanceid', 'mod_bigbluebuttonbn');
+            throw new \moodle_exception('invalidinstanceid', 'bbbext_bnreminders');
         }
         $fromuserid = $fromuserid ?? $USER->id;
         $guest = self::get_record(['email' => $email, 'bigbluebuttonbnid' => $bigbluebuttonid, 'userfrom' => $fromuserid]);

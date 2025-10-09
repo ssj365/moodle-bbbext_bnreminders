@@ -24,6 +24,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+$string['activitynotfound'] = 'Activity not found';
 $string['addreminder'] = 'Add reminder';
 $string['bnreminders'] = 'Send email reminders before the session starts';
 $string['bnreminders:enabled'] = 'Send email reminders before session';
@@ -53,6 +54,7 @@ $string['emailunsubscribemessage'] = '<span>
 You can unsubscribe to this reminder by clicking on the following <a href="{$a->unsubscribeurl}">Unsubscribe link</a>.
 </span>';
 $string['error:duplicate'] = 'You have already one reminder for this meeting for the same time span';
+$string['invalidinstanceid'] = 'Invalid instance id';
 $string['messageprovider:reminder'] = 'BigBlueButton email reminder';
 $string['mod_form_bnreminders'] = 'Email notifications';
 $string['mod_form_bnreminders_desc'] = 'Send reminders to students as notifications.';
