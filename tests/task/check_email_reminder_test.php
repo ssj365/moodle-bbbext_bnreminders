@@ -57,7 +57,7 @@ final class check_email_reminder_test extends \advanced_testcase {
     public static function reminder_enabled_sent_provider(): array {
         return [
             '1 Hour before' => [
-                'interval' => utils::ONE_HOUR,
+                'reminderinterval' => utils::ONE_HOUR,
                 'openingtimespan' => 'PT1H',
                 'expectedemails' => [
                     'teacher@example.com',
@@ -67,7 +67,7 @@ final class check_email_reminder_test extends \advanced_testcase {
                 'nosubscriptions' => ['username1@example.com'],
             ],
             '1 Day before' => [
-                'interval' => utils::ONE_HOUR,
+                'reminderinterval' => utils::ONE_HOUR,
                 'openingtimespan' => 'P1D',
                 'expectedemails' => [],
             ],
@@ -82,7 +82,7 @@ final class check_email_reminder_test extends \advanced_testcase {
     public static function reminder_enabled_with_guest_sent_provider(): array {
         return [
             '1 Hour before' => [
-                'interval' => utils::ONE_HOUR,
+                'reminderinterval' => utils::ONE_HOUR,
                 'openingtimespan' => 'PT1H',
                 'guests' => ['guest@email.com'],
                 'expectedemails' => [
@@ -94,13 +94,13 @@ final class check_email_reminder_test extends \advanced_testcase {
                 'nosubscriptions' => ['username1@example.com'],
             ],
             '1 Day before' => [
-                'interval' => utils::ONE_HOUR,
+                'reminderinterval' => utils::ONE_HOUR,
                 'openingtimespan' => 'P1D',
                 'guests' => ['guest@email.com'],
                 'expectedemails' => [],
             ],
             '1 Hour before guest unsubscribed' => [
-                'interval' => utils::ONE_HOUR,
+                'reminderinterval' => utils::ONE_HOUR,
                 'openingtimespan' => 'PT1H',
                 'guests' => ['guest@email.com'],
                 'expectedemails' => [
